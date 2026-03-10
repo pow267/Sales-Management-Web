@@ -1,0 +1,18 @@
+{
+  "name": "ecmp186-nhom06",
+  "version": "1.0.0",
+  "description": "Dockerized PHP Application with Tailwind CSS",
+  "type": "commonjs",
+  "scripts": {
+    "dev": "tailwindcss -i public/assets/css/input.css -o public/assets/css/output.css --watch",
+    "build": "tailwindcss -i public/assets/css/input.css -o public/assets/css/output.css --minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pow267/ECMP186-NHOM06.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "3.4.13"
+  }
+}

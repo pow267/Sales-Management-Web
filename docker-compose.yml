@@ -1,0 +1,59 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/var/www/html
+      - images_data:/var/www/html/public/assets/images
+    networks:
+      - milk_network
+    restart: unless-stopped
+
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: >
+      sh -c "
+      npm install &&
+      npm run dev
+      "
+    tty: true
+    stdin_open: true
+    networks:
+      - milk_network
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: ql_ban_sua
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - milk_network
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  images_data:
+
+networks:
+  milk_network:
+    driver: bridge

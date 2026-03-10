@@ -1,0 +1,7 @@
+
+public/assets/images/*
+!public/assets/images/default.jpg
+node_modules/
+pgdata/
+db_data/
+public/assets/css/output.css
