@@ -1,9 +1,9 @@
-const { test, expect } = require('./fixture/fixture_guest');
-const { SignUpPage } = require('../pages/SignUpPage');
-const { LoginPage } = require('../pages/LoginPage');
-const { testData } = require('../tests/data/testData');
+const { test, expect } = require('../fixture/fixture_guest');
+const { SignUpPage } = require('../../pages/SignUpPage');
+const { LoginPage } = require('../../pages/LoginPage');
+const { testData } = require('../data/testData');
 
-const db = require('../database/db');
+const db = require('../../database/db');
 
 test.describe('Kiểm tra chức năng đăng ký', () => {
 

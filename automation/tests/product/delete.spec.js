@@ -1,7 +1,7 @@
-const { test, expect } = require('./fixture/fixture');
-const { AddPage } = require('../pages/AddPage');
-const { DeletePage } = require('../pages/DeletePage');
-const db = require('../database/db');
+const { test, expect } = require('../fixture/fixture');
+const { AddPage } = require('../../pages/AddPage');
+const { DeletePage } = require('../../pages/DeletePage');
+const db = require('../../database/db');
 
 test.describe('Chức năng xóa sản phẩm', () => {
 

@@ -1,5 +1,5 @@
-const { test, expect } = require('./fixture/fixture');
-const { InforProduct } = require('../pages/InforProduct');
+const { test, expect } = require('../fixture/fixture');
+const { InforProduct } = require('../../pages/InforProduct');
 
 test.describe('Trang thông tin chi tiết của sản phẩm', () => {
 

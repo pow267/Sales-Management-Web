@@ -1,6 +1,6 @@
-const { test, expect } = require('./fixture/fixture');
-const { AddPage } = require('../pages/AddPage');
-const db = require('../database/db');
+const { test, expect } = require('../fixture/fixture');
+const { AddPage } = require('../../pages/AddPage');
+const db = require('../../database/db');
 
 test.describe('Chức năng thêm sản phẩm', () => {
 

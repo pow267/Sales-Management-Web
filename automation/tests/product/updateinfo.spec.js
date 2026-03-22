@@ -1,8 +1,8 @@
-const { test, expect } = require('./fixture/fixture');
-const { InforUpdatePage } = require('../pages/InforUpdatePage');
-const { AddPage } = require('../pages/AddPage');
-const { DeletePage } = require('../pages/DeletePage');
-const db = require('../database/db');
+const { test, expect } = require('../fixture/fixture');
+const { InforUpdatePage } = require('../../pages/InforUpdatePage');
+const { AddPage } = require('../../pages/AddPage');
+const { DeletePage } = require('../../pages/DeletePage');
+const db = require('../../database/db');
 
 test.describe('Chức năng cập nhật lại thông tin sản phẩm', () => {
         
