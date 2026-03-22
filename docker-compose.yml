@@ -11,8 +11,7 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - .:/var/www/html
-      - images_data:/var/www/html/public/assets/images
+      - .:/var/www/html:cached
     networks:
       - milk_network
     restart: unless-stopped
@@ -37,7 +36,9 @@ services:
     environment:
       POSTGRES_DB: ql_ban_sua
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+    - "5433:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./database:/docker-entrypoint-initdb.d
@@ -52,7 +53,6 @@ services:
 
 volumes:
   db_data:
-  images_data:
 
 networks:
   milk_network:

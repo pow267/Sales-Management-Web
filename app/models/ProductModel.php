@@ -57,7 +57,7 @@ class ProductModel
         ")->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function insert(array $data): void
+    public function insert(array $data): int
     {
         $stmt = $this->conn->prepare("
             INSERT INTO products
@@ -67,6 +67,8 @@ class ProductModel
         ");
 
         $stmt->execute($data);
+
+        return (int)$this->conn->lastInsertId();
     }
 
     public function update(array $data): void

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Thông tin các sản phẩm</title>
     <link rel="stylesheet" href="/assets/css/output.css">
+    <link rel="icon" href="/assets/favicon.ico">
 </head>
 
 <?php
@@ -83,12 +84,14 @@ $role = $_SESSION['user']['role'] ?? 'guest';
                 <?= number_format($row['don_gia'], 0, ',', '.') ?> VND
             </div>
 
-            <?php if (!empty($row['hinh'])): ?>
-            <div class="img-box">
-                <img loading="lazy"
-                     src="/assets/images/<?= htmlspecialchars($row['hinh']) ?>"
-                     alt="Hình sản phẩm">
-            </div>
+            <?php
+            $img = trim($row['hinh'] ?? '');
+
+            if (!empty($img) && file_exists(__DIR__ . '/../../public/assets/images/' . $img)):
+            ?>
+                <div class="img-box">
+                        <img src="/assets/images/<?= htmlspecialchars($img) ?>">
+                </div>
             <?php endif; ?>
 
         </div>
@@ -97,6 +100,10 @@ $role = $_SESSION['user']['role'] ?? 'guest';
     <?php endif; ?>
 
     </div>
+
+    <p id="noResultMessage" class="empty-message" style="display:none;">
+        Không có sản phẩm nào như vậy.
+    </p>
 
     <!-- ================= PAGINATION ================= -->
     <?php if (!empty($totalPages) && $totalPages > 1): ?>
@@ -164,11 +171,14 @@ $role = $_SESSION['user']['role'] ?? 'guest';
 
         <div class="detail-content">
 
-            <?php if (!empty($chitiet['hinh'])): ?>
-            <div class="detail-img">
-                <img loading="lazy"
-                     src="/assets/images/<?= htmlspecialchars($chitiet['hinh']) ?>">
-            </div>
+            <?php
+            $img = trim($chitiet['hinh'] ?? '');
+
+            if (!empty($img) && file_exists(__DIR__ . '/../../public/assets/images/' . $img)):
+            ?>
+                <div class="detail-img">
+                    <img src="/assets/images/<?= htmlspecialchars($img) ?>">
+                </div>
             <?php endif; ?>
 
             <div class="detail-info">
@@ -252,7 +262,7 @@ $role = $_SESSION['user']['role'] ?? 'guest';
 
         <div class="form-title">THÊM SỮA MỚI</div>
 
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" id="addForm">
 
             <input type="hidden" name="csrf_token"
                    value="<?= $_SESSION['csrf_token'] ?? '' ?>">
@@ -289,13 +299,13 @@ $role = $_SESSION['user']['role'] ?? 'guest';
             </div>
 
             <div class="form-row">
-                <label>Thành phần dinh dưỡng</label>
-                <textarea name="tpdd"></textarea>
+                <label for="dd" >Thành phần dinh dưỡng</label>
+                <textarea id="dd" name="tpdd"></textarea>
             </div>
 
             <div class="form-row">
-                <label>Lợi ích</label>
-                <textarea name="loi_ich"></textarea>
+                <label for="li" >Lợi ích</label>
+                <textarea id="li" name="loi_ich"></textarea>
             </div>
 
             <div class="form-row">
@@ -304,9 +314,9 @@ $role = $_SESSION['user']['role'] ?? 'guest';
             </div>
 
             <div class="form-actions">
-                <button type="submit" name="btn_them">
-                    Thêm mới
-                </button>
+            <button type="submit" name="btn_them">
+                Thêm mới
+            </button>
             </div>
 
         </form>
@@ -399,14 +409,48 @@ $role = $_SESSION['user']['role'] ?? 'guest';
 </div>
 
 <script>
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    let value = this.value.toLowerCase();
-    let cards = document.querySelectorAll('.product-card');
-    cards.forEach(card => {
-        let name = card.querySelector('.product-name').innerText.toLowerCase();
-        card.style.display = name.includes(value) ? 'flex' : 'none';
+const search = document.getElementById('searchInput');
+
+if (search) {
+    search.addEventListener('keyup', function() {
+        let value = this.value.toLowerCase();
+        let cards = document.querySelectorAll('.product-card');
+        let hasVisible = false;
+
+        cards.forEach(card => {
+            let name = card.querySelector('.product-name').innerText.toLowerCase();
+
+            if (name.includes(value)) {
+                card.style.display = 'flex';
+                hasVisible = true;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        const noResult = document.getElementById('noResultMessage');
+
+        if (!hasVisible && value.trim() !== '') {
+            noResult.style.display = 'block';
+        } else {
+            noResult.style.display = 'none';
+        }
     });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    const form = document.getElementById('addForm');
+
+    if (form) {
+        form.addEventListener('submit', function() {
+            const btn = document.getElementById('submitBtn');
+            if (btn) btn.disabled = true;
+        });
+    }
+
 });
+
 </script>
 
 <script>
@@ -427,7 +471,7 @@ function decreaseQty() {
 function updateCartLink() {
     const qty = document.getElementById('quantityInput').value;
     const btn = document.getElementById('addToCartBtn');
-    btn.href = "/cart/add?id=<?= $chitiet['id'] ?>&qty=" + qty;
+    btn.href = "/cart/add?id=" + <?= json_encode($chitiet['id'] ?? '') ?> + "&qty=" + qty;
 }
 
 document.getElementById('quantityInput')?.addEventListener('change', updateCartLink);

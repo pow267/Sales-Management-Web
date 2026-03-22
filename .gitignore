@@ -1,6 +1,6 @@
 
-public/assets/images/*
-!public/assets/images/default.jpg
+public/assets/images
+!public/assets/images/default.png
 node_modules/
 pgdata/
 db_data/
