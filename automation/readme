@@ -1,0 +1,7 @@
+-- Cài môi trường Node.js
+node -v
+npm -v
+npm init -y
+
+---- cài playwright ----
+npm init playwright@latest
