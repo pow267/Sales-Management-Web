@@ -1,5 +1,5 @@
-const { test, expect } = require ('./fixture/fixture');
-const { LoginPage } = require ('../pages/LoginPage');
+const { test, expect } = require ('../fixture/fixture');
+const { LoginPage } = require ('../../pages/LoginPage');
 
 const testData = [
     {username: 'admin', password: '123', success: true},
