@@ -34,7 +34,12 @@ class ProductController
 
     private function handleUpload(): ?string
     {
+
         if (empty($_FILES['hinh']['name'])) {
+            return null;
+        }
+
+        if ($_FILES['hinh']['error'] !== UPLOAD_ERR_OK) {
             return null;
         }
 
@@ -44,22 +49,53 @@ class ProductController
             mkdir($uploadDir, 0777, true);
         }
 
-        $ext = strtolower(pathinfo($_FILES['hinh']['name'], PATHINFO_EXTENSION));
-        $fileName = time() . '_' . uniqid() . '.' . $ext;
-        $targetPath = $uploadDir . $fileName;
+        // Validate MIME
+        $finfo = new finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->file($_FILES['hinh']['tmp_name']);
 
-        if (move_uploaded_file($_FILES['hinh']['tmp_name'], $targetPath)) {
-            return $fileName;
+        if (!in_array($mime, ['image/png', 'image/jpeg'])) {
+            return null;
         }
 
-        return null;
+        $ext = strtolower(pathinfo($_FILES['hinh']['name'], PATHINFO_EXTENSION));
+
+        // 🔥 FIX: random filename
+        $fileName = time() . '_' . bin2hex(random_bytes(8)) . '.' . $ext;
+
+        $targetPath = $uploadDir . $fileName;
+        $tmpPath = $targetPath . '.tmp';
+
+        // Move file
+        if (!move_uploaded_file($_FILES['hinh']['tmp_name'], $tmpPath)) {
+            return null;
+        }
+
+        // Validate image thật
+        $imageInfo = @getimagesize($tmpPath);
+        if ($imageInfo === false) {
+            unlink($tmpPath);
+            return null;
+        }
+
+        // Rename atomic
+        if (!rename($tmpPath, $targetPath)) {
+            unlink($tmpPath);
+            return null;
+        }
+
+        // 🔥 VERIFY: đảm bảo file tồn tại
+        if (!file_exists($targetPath)) {
+            return null;
+        }
+
+        clearstatcache(true, $targetPath);
+
+        return $fileName;
     }
 
     private function deleteImageFile(?string $fileName): void
     {
-        if (empty($fileName)) {
-            return;
-        }
+        if (empty($fileName)) return;
 
         $filePath = __DIR__ . '/../../public/assets/images/' . $fileName;
 
@@ -76,7 +112,11 @@ class ProductController
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
 
-        /* ================= THÊM ================= */
+        $perPage = 9;
+        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+        $offset = ($page - 1) * $perPage;
+
+        // ================= ADD =================
         if (isset($_POST['btn_them'])) {
 
             AuthMiddleware::role('admin');
@@ -88,18 +128,25 @@ class ProductController
             $data = $this->sanitize($_POST, false);
 
             $uploadedFile = $this->handleUpload();
+
             if ($uploadedFile) {
-                $data['hinh'] = $uploadedFile;
+                $fullPath = __DIR__ . '/../../public/assets/images/' . $uploadedFile;
+
+                // 🔥 chỉ lưu DB nếu file tồn tại thật
+                $data['hinh'] = file_exists($fullPath) ? $uploadedFile : '';
+            } else {
+                $data['hinh'] = '';
             }
 
-            $this->model->insert($data);
+            $new_id = $this->model->insert($data);
 
             $_SESSION['flash'] = "Thêm sản phẩm thành công!";
-            header("Location: /");
+
+            header("Location: /?id=$new_id&page=$page#chitiet");
             exit;
         }
 
-        /* ================= CẬP NHẬT ================= */
+        // ================= UPDATE =================
         if (isset($_POST['btn_capnhat'])) {
 
             AuthMiddleware::role('admin');
@@ -115,24 +162,27 @@ class ProductController
             $uploadedFile = $this->handleUpload();
 
             if ($uploadedFile) {
+                $fullPath = __DIR__ . '/../../public/assets/images/' . $uploadedFile;
 
-                $this->deleteImageFile($oldImage);
-
-                $data['hinh'] = $uploadedFile;
-
+                if (file_exists($fullPath)) {
+                    $this->deleteImageFile($oldImage);
+                    $data['hinh'] = $uploadedFile;
+                } else {
+                    $data['hinh'] = $oldImage;
+                }
             } else {
-
                 $data['hinh'] = $oldImage;
             }
 
             $this->model->update($data);
 
             $_SESSION['flash'] = "Cập nhật thành công!";
-            header("Location: /?id=" . $data['id']);
+
+            header("Location: /?id=" . $data['id'] . "&page=$page#chitiet");
             exit;
         }
 
-        /* ================= XÓA ================= */
+        // ================= DELETE =================
         if (isset($_POST['btn_xoa'])) {
 
             AuthMiddleware::role('admin');
@@ -152,15 +202,12 @@ class ProductController
             $this->model->delete($id);
 
             $_SESSION['flash'] = "Xóa sản phẩm thành công!";
-            header("Location: /");
+
+            header("Location: /?page=$page");
             exit;
         }
 
-        /* ================= PAGINATION ================= */
-        $perPage = 9;
-        $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-        $offset = ($page - 1) * $perPage;
-
+        // ================= VIEW =================
         $totalProducts = $this->model->countAll();
         $totalPages = max(1, ceil($totalProducts / $perPage));
 
