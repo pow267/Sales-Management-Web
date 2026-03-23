@@ -4,7 +4,7 @@
 - Playwright (E2E Testing)
 - PostgreSQL (Database)
 - Docker (Environment setup)
-- Node.js
+- Tailwind
 
 ## Run project
 ### 1. Cài đặt Docker
