@@ -10,7 +10,6 @@
 ### 1. Cài đặt Docker
 Tải và cài Docker Desktop:  
 https://www.docker.com/products/docker-desktop/
-Open project, use cmd:
 
 ### 2. Khởi động hệ thống (Backend + Database)
 docker compose up -d --build
