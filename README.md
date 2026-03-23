@@ -8,19 +8,18 @@
 
 ## Run project
 ### 1. Cài đặt Docker
-Tải và cài Docker Desktop:  
-https://www.docker.com/products/docker-desktop/
+Tải và cài Docker Desktop: https://www.docker.com/products/docker-desktop/
 
 ### 2. Khởi động hệ thống (Backend + Database)
-docker compose up -d --build
-http://localhost:8080/
+- docker compose up -d --build
+- http://localhost:8080/
 
 ### 3. Cài đặt dependencies cho automation test
 npm install
 
 ### 4. Run test
-cd "automation"
-npx playwright test --ui
+- cd "automation"
+- npx playwright test --ui
 
 ## Scope kiểm thử
 - E2E testing cho các luồng CRUD
