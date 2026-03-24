@@ -13,13 +13,26 @@
 THANH TOÁN
 </div>
 
-<p>Chức năng thanh toán đang được xây dựng.</p>
+<?php if (!empty($_SESSION['flash'])): ?>
+    <div id="toast" class="toast">
+        <?= htmlspecialchars($_SESSION['flash']); unset($_SESSION['flash']); ?>
+    </div>
+    <script>
+        setTimeout(() => {
+            const toast = document.getElementById('toast');
+            if (toast) toast.style.opacity = '0';
+        }, 2500);
+    </script>
+<?php endif; ?>
 
-<a href="/cart" class="add-btn">
-    ← Quay lại giỏ hàng
-</a>
+<div id="checkoutContent">
+    <p class="text-center text-gray-500 py-10">Đang tải thông tin thanh toán...</p>
+</div>
 
 </div>
+
+<script src="/assets/js/api-client.js"></script>
+<script src="/assets/js/checkout-page.js"></script>
 
 </body>
 </html>

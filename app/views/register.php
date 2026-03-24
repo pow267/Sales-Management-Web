@@ -13,13 +13,15 @@
         ĐĂNG KÝ TÀI KHOẢN
     </div>
 
-    <?php if (!empty($_SESSION['error'])): ?>
-        <div class="form-message form-message-error">
-            <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
-        </div>
-    <?php endif; ?>
+    <div id="registerMessage">
+        <?php if (!empty($_SESSION['error'])): ?>
+            <div class="form-message form-message-error">
+                <?= htmlspecialchars($_SESSION['error']); unset($_SESSION['error']); ?>
+            </div>
+        <?php endif; ?>
+    </div>
 
-    <form method="POST" action="/register">
+    <form method="POST" action="/api/auth/register" id="registerForm">
 
         <div class="form-row">
             <label>Tên người dùng</label>
@@ -52,7 +54,7 @@
         </div>
 
         <div class="form-actions form-actions-row">
-            <button type="submit" name="btn_register">
+            <button type="submit" name="btn_register" id="registerSubmitBtn">
                 Đăng ký
             </button>
 
@@ -64,6 +66,42 @@
     </form>
 
 </div>
+
+<script src="/assets/js/api-client.js"></script>
+<script>
+const registerForm = document.getElementById('registerForm');
+const registerMessage = document.getElementById('registerMessage');
+const registerSubmitBtn = document.getElementById('registerSubmitBtn');
+
+function renderRegisterMessage(message) {
+    const messageBox = document.createElement('div');
+    messageBox.className = 'form-message form-message-error';
+    messageBox.textContent = message;
+    registerMessage.replaceChildren(messageBox);
+}
+
+registerForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    registerSubmitBtn.disabled = true;
+
+    try {
+        const formData = new FormData(registerForm);
+        const payload = Object.fromEntries(formData.entries());
+
+        const response = await window.apiClient.request(registerForm.action, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+        });
+
+        window.location.href = response.data.redirect || '/login';
+    } catch (error) {
+        renderRegisterMessage(error.message);
+    } finally {
+        registerSubmitBtn.disabled = false;
+    }
+});
+</script>
 
 </body>
 </html>
