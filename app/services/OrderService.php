@@ -14,7 +14,7 @@ class OrderService
         $this->productModel = new ProductModel();
     }
 
-    public function createOrder(int $userId, array $cart): void
+    public function createOrder(int $userId, array $cart): array
     {
         if (empty($cart)) {
             throw new Exception("Giỏ hàng trống.");
@@ -62,9 +62,64 @@ class OrderService
 
             $this->orderModel->commit();
 
+            return [
+                'id' => $orderId,
+                'total' => $total,
+                'items' => $itemsData
+            ];
+
         } catch (Exception $e) {
             $this->orderModel->rollback();
             throw $e;
         }
+    }
+
+    public function listOrders(?int $userId = null): array
+    {
+        $orders = $this->orderModel->getAll($userId);
+
+        return array_map(
+            fn(array $order): array => $this->normalizeOrder($order),
+            $orders
+        );
+    }
+
+    public function getOrderDetails(int $orderId, ?int $userId = null): ?array
+    {
+        $order = $this->orderModel->getById($orderId, $userId);
+
+        if (!$order) {
+            return null;
+        }
+
+        $items = $this->orderModel->getItems($orderId);
+        $order = $this->normalizeOrder($order);
+        $order['items'] = array_map(
+            fn(array $item): array => $this->normalizeOrderItem($item),
+            $items
+        );
+
+        return $order;
+    }
+
+    private function normalizeOrder(array $order): array
+    {
+        $order['id'] = (int)($order['id'] ?? 0);
+        $order['user_id'] = (int)($order['user_id'] ?? 0);
+        $order['total_amount'] = (int)($order['total_amount'] ?? 0);
+
+        return $order;
+    }
+
+    private function normalizeOrderItem(array $item): array
+    {
+        $item['id'] = (int)($item['id'] ?? 0);
+        $item['order_id'] = (int)($item['order_id'] ?? 0);
+        $item['product_id'] = (int)($item['product_id'] ?? 0);
+        $item['quantity'] = (int)($item['quantity'] ?? 0);
+        $item['price'] = (int)($item['price'] ?? 0);
+        $item['subtotal'] = (int)($item['subtotal'] ?? 0);
+
+        return $item;
     }
 }

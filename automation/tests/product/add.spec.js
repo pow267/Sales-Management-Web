@@ -20,6 +20,7 @@ test.describe('Chức năng thêm sản phẩm', () => {
         });
 
         await expect(addPage.successAdd).toBeVisible();
+        console.log('thêm sản phẩm thành công');
 
         const rows = await db.query(
             `SELECT * FROM products WHERE ten_sua = $1 ORDER BY id DESC LIMIT 1`,
@@ -29,5 +30,6 @@ test.describe('Chức năng thêm sản phẩm', () => {
         expect(rows.length).toBe(1);
         expect(rows[0].trong_luong).toBe(180);
         expect(rows[0].don_gia).toBe(10000);
+        console.log('Kiểm tra database thành công');
     });
 });

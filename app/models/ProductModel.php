@@ -11,24 +11,61 @@ class ProductModel
         $this->conn = Database::getConnection();
     }
 
-    public function countAll(): int
+    public function countAll(string $search = ''): int
     {
-        return (int)$this->conn->query("SELECT COUNT(*) FROM products")
-            ->fetchColumn();
+        $search = trim($search);
+
+        if ($search === '') {
+            return (int)$this->conn->query("SELECT COUNT(*) FROM products")
+                ->fetchColumn();
+        }
+
+        $stmt = $this->conn->prepare("
+            SELECT COUNT(*)
+            FROM products p
+            LEFT JOIN hang_sua h ON p.ma_hang_sua = h.ma_hs
+            WHERE p.ten_sua ILIKE :search
+               OR COALESCE(p.loai_sua, '') ILIKE :search
+               OR COALESCE(h.ten_hs, '') ILIKE :search
+        ");
+
+        $stmt->execute([
+            'search' => '%' . $search . '%'
+        ]);
+
+        return (int)$stmt->fetchColumn();
     }
 
-    public function getPaginated(int $limit, int $offset): array
+    public function getPaginated(int $limit, int $offset, string $search = ''): array
     {
-        $stmt = $this->conn->prepare("
+        $sql = "
             SELECT p.*, h.ten_hs
             FROM products p
             LEFT JOIN hang_sua h ON p.ma_hang_sua = h.ma_hs
+        ";
+
+        if (trim($search) !== '') {
+            $sql .= "
+                WHERE p.ten_sua ILIKE :search
+                   OR COALESCE(p.loai_sua, '') ILIKE :search
+                   OR COALESCE(h.ten_hs, '') ILIKE :search
+            ";
+        }
+
+        $sql .= "
             ORDER BY p.id
             LIMIT :limit OFFSET :offset
-        ");
+        ";
+
+        $stmt = $this->conn->prepare($sql);
 
         $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+
+        if (trim($search) !== '') {
+            $stmt->bindValue(':search', '%' . trim($search) . '%', PDO::PARAM_STR);
+        }
+
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

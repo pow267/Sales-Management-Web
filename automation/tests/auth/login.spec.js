@@ -1,6 +1,7 @@
 const { test, expect } = require ('../fixture/fixture');
 const { LoginPage } = require ('../../pages/LoginPage');
 
+
 const testData = [
     {username: 'admin', password: '123', success: true},
     {username: 'admin', password: '1234', success: false},
