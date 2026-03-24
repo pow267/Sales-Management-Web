@@ -4,6 +4,8 @@ require_once __DIR__ . '/../models/AuthModel.php';
 
 class AuthService
 {
+    private const CSRF_COOKIE_NAME = 'XSRF-TOKEN';
+
     private AuthModel $authModel;
 
     public function __construct()
@@ -17,11 +19,22 @@ class AuthService
             $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
         }
 
+        $this->syncCsrfCookie($_SESSION['csrf_token']);
+        return $_SESSION['csrf_token'];
+    }
+
+    public function regenerateCsrfToken(): string
+    {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+        $this->syncCsrfCookie($_SESSION['csrf_token']);
+
         return $_SESSION['csrf_token'];
     }
 
     public function validateCsrf(?string $token): bool
     {
+        $token = $this->resolveCsrfToken($token);
+
         return !empty($_SESSION['csrf_token'])
             && !empty($token)
             && hash_equals($_SESSION['csrf_token'], $token);
@@ -55,13 +68,14 @@ class AuthService
             throw new RuntimeException('Sai tên đăng nhập hoặc mật khẩu.');
         }
 
+        session_regenerate_id(true);
         $_SESSION['user'] = [
             'id'       => (int)$user['id'],
             'username' => $user['username'],
             'role'     => $user['role']
         ];
 
-        $this->ensureCsrfToken();
+        $this->regenerateCsrfToken();
 
         return $_SESSION['user'];
     }
@@ -99,6 +113,68 @@ class AuthService
     public function logout(): void
     {
         $_SESSION = [];
+
+        if (ini_get('session.use_cookies')) {
+            $params = session_get_cookie_params();
+
+            setcookie(session_name(), '', [
+                'expires' => time() - 42000,
+                'path' => $params['path'] ?: '/',
+                'domain' => $params['domain'] ?: '',
+                'secure' => (bool)$params['secure'],
+                'httponly' => (bool)$params['httponly'],
+                'samesite' => $params['samesite'] ?? 'Lax'
+            ]);
+        }
+
+        setcookie(self::CSRF_COOKIE_NAME, '', [
+            'expires' => time() - 42000,
+            'path' => '/',
+            'secure' => $this->isSecureRequest(),
+            'httponly' => false,
+            'samesite' => 'Lax'
+        ]);
+
         session_destroy();
+    }
+
+    private function resolveCsrfToken(?string $token): ?string
+    {
+        $candidates = [
+            $token,
+            $_POST['csrf_token'] ?? null,
+            $_SERVER['HTTP_X_CSRF_TOKEN'] ?? null,
+            $_SERVER['HTTP_X_XSRF_TOKEN'] ?? null
+        ];
+
+        foreach ($candidates as $candidate) {
+            if (!is_string($candidate)) {
+                continue;
+            }
+
+            $candidate = trim($candidate);
+
+            if ($candidate !== '') {
+                return $candidate;
+            }
+        }
+
+        return null;
+    }
+
+    private function syncCsrfCookie(string $token): void
+    {
+        setcookie(self::CSRF_COOKIE_NAME, $token, [
+            'expires' => 0,
+            'path' => '/',
+            'secure' => $this->isSecureRequest(),
+            'httponly' => false,
+            'samesite' => 'Lax'
+        ]);
+    }
+
+    private function isSecureRequest(): bool
+    {
+        return !empty($_SERVER['HTTPS']) && strtolower((string)$_SERVER['HTTPS']) !== 'off';
     }
 }

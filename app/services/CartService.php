@@ -1,9 +1,11 @@
 <?php
 
 require_once __DIR__ . '/../models/ProductModel.php';
+require_once __DIR__ . '/AuthService.php';
 
 class CartService
 {
+    private AuthService $authService;
     private ProductModel $productModel;
 
     public function __construct()
@@ -16,10 +18,8 @@ class CartService
             $_SESSION['cart'] = [];
         }
 
-        if (empty($_SESSION['csrf_token'])) {
-            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-        }
-
+        $this->authService = new AuthService();
+        $this->authService->ensureCsrfToken();
         $this->productModel = new ProductModel();
     }
 

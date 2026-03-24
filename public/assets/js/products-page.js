@@ -77,7 +77,7 @@
                     '<div class="form-row"><label for="dd">Thành phần dinh dưỡng</label><textarea id="dd" name="tpdd"></textarea></div>' +
                     '<div class="form-row"><label for="li">Lợi ích</label><textarea id="li" name="loi_ich"></textarea></div>' +
                     '<div class="form-row"><label>Hình ảnh</label><input type="file" name="hinh"></div>' +
-                    '<div class="form-actions"><button type="submit" id="addSubmitBtn">Thêm mới</button></div>' +
+                    '<div class="form-actions"><button type="button" id="addSubmitBtn">Thêm mới</button></div>' +
                 '</form>' +
             '</div>';
     }
@@ -110,7 +110,7 @@
                     '<div class="form-row"><label>Thành phần dinh dưỡng</label><textarea name="tpdd">' + escapeHtml(state.detail.tpdd) + '</textarea></div>' +
                     '<div class="form-row"><label>Lợi ích</label><textarea name="loi_ich">' + escapeHtml(state.detail.loi_ich) + '</textarea></div>' +
                     '<div class="form-row"><label>Hình ảnh mới</label><input type="file" name="hinh"></div>' +
-                    '<div class="form-actions"><button type="submit" id="editSubmitBtn">Cập nhật</button></div>' +
+                    '<div class="form-actions"><button type="button" id="editSubmitBtn">Cập nhật</button></div>' +
                 '</form>' +
             '</div>';
     }
@@ -201,7 +201,7 @@
                     '<input type="hidden" name="_method" value="DELETE">' +
                     '<input type="hidden" name="csrf_token" value="' + csrfToken + '">' +
                     '<input type="hidden" name="page" value="' + pageValue + '">' +
-                    '<button type="submit" class="add-btn">XÓA SẢN PHẨM</button>' +
+                    '<button type="button" class="add-btn">XÓA SẢN PHẨM</button>' +
                 '</form>';
         }
 
@@ -283,6 +283,52 @@
 
         const current = Math.max(1, parseInt(input.value || '1', 10));
         input.value = Math.max(1, current + delta);
+    }
+
+    async function submitProductForm(form) {
+        const submitBtn = form.querySelector('button');
+
+        if (!(submitBtn instanceof HTMLButtonElement)) {
+            return;
+        }
+
+        const formData = new FormData(form);
+        formData.set('csrf_token', state.session.csrf_token);
+        formData.set('page', String(state.pagination?.page || 1));
+
+        submitBtn.disabled = true;
+
+        try {
+            const response = await window.apiClient.request(form.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            window.location.href = response.data.redirect || '/';
+        } catch (error) {
+            window.apiClient.showToast(error.message, 'error');
+            submitBtn.disabled = false;
+        }
+    }
+
+    async function deleteProduct(form) {
+        if (!window.confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
+            return;
+        }
+
+        try {
+            const response = await window.apiClient.request(form.action, {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    csrf_token: state.session.csrf_token,
+                    page: state.pagination?.page || 1
+                })
+            });
+
+            window.location.href = response.data.redirect || '/';
+        } catch (error) {
+            window.apiClient.showToast(error.message, 'error');
+        }
     }
 
     async function loadSession() {
@@ -384,14 +430,44 @@
     }, 300));
 
     document.addEventListener('click', (event) => {
-        const action = event.target.getAttribute('data-qty-action');
+        const target = event.target;
+
+        if (!(target instanceof HTMLElement)) {
+            return;
+        }
+
+        const action = target.getAttribute('data-qty-action');
 
         if (action === 'increase') {
             updateQuantity(1);
+            return;
         }
 
         if (action === 'decrease') {
             updateQuantity(-1);
+            return;
+        }
+
+        const productSubmitBtn = target.closest('#addSubmitBtn, #editSubmitBtn');
+
+        if (productSubmitBtn instanceof HTMLButtonElement) {
+            const form = productSubmitBtn.form;
+
+            if (form instanceof HTMLFormElement) {
+                submitProductForm(form);
+            }
+
+            return;
+        }
+
+        const deleteBtn = target.closest('#deleteProductForm button');
+
+        if (deleteBtn instanceof HTMLButtonElement) {
+            const form = deleteBtn.form;
+
+            if (form instanceof HTMLFormElement) {
+                deleteProduct(form);
+            }
         }
     });
 
@@ -446,49 +522,14 @@
 
         if (form.id === 'deleteProductForm') {
             event.preventDefault();
-
-            if (!window.confirm('Bạn có chắc muốn xóa sản phẩm này?')) {
-                return;
-            }
-
-            try {
-                const response = await window.apiClient.request(form.action, {
-                    method: 'DELETE',
-                    body: JSON.stringify({
-                        csrf_token: state.session.csrf_token,
-                        page: state.pagination?.page || 1
-                    })
-                });
-
-                window.location.href = response.data.redirect || '/';
-            } catch (error) {
-                window.apiClient.showToast(error.message, 'error');
-            }
+            await deleteProduct(form);
 
             return;
         }
 
         if (form.id === 'addForm' || form.id === 'editForm') {
             event.preventDefault();
-
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const formData = new FormData(form);
-            formData.set('csrf_token', state.session.csrf_token);
-            formData.set('page', String(state.pagination?.page || 1));
-
-            submitBtn.disabled = true;
-
-            try {
-                const response = await window.apiClient.request(form.action, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                window.location.href = response.data.redirect || '/';
-            } catch (error) {
-                window.apiClient.showToast(error.message, 'error');
-                submitBtn.disabled = false;
-            }
+            await submitProductForm(form);
         }
     });
 
