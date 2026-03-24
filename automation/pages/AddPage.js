@@ -1,10 +1,8 @@
-const { expect } = require('@playwright/test');
-
 class AddPage {
     constructor(page) {
         this.page = page;
 
-        this.clickAdd = page.locator('a[href="?action=them&page=1"]');
+        this.clickAdd = page.locator('a[href="/?action=them"]');
         this.tenSuaInput = page.locator('input[name="ten_sua"]');
         this.chonHangSua = page.locator('select[name="ma_hang_sua"]');
         this.loaiSuaInput = page.locator('input[name="loai_sua"]');
@@ -13,12 +11,13 @@ class AddPage {
         this.dinhDuongInput = page.locator('#dd');
         this.loiIchInput = page.locator('#li');
         this.hinhInput = page.locator('input[name="hinh"]');
-        this.themButton = page.locator('button[name="btn_them"]');
+        this.themButton = page.locator('#addSubmitBtn');
         this.successAdd = page.getByText(/Thêm sản phẩm thành công!/i);
     }
 
     async goto(){
         await this.page.goto("/");
+        await this.page.waitForLoadState('networkidle');
     }
 
     async add(){

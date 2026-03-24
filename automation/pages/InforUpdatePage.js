@@ -20,11 +20,13 @@ class InforUpdatePage{
 
     async goto(){
         await this.page.goto('/');
+        await this.page.waitForLoadState('networkidle');
     }
 
     async gotoEditById(id){
         await this.page.goto(`/?id=${id}&page=1#chitiet`);
-        await expect(this.addCart).toBeVisible
+        await this.page.waitForLoadState('networkidle');
+        await expect(this.addCart).toBeVisible();
         
         await this.page.getByRole('link', { name: 'SỬA THÔNG TIN' }).click();
         await expect(this.tenSuaInput).toBeVisible();
@@ -47,10 +49,10 @@ class InforUpdatePage{
 
     async update(id, data){
         await this.gotoEditById(id);
-        await this.fillForm(data)
+        await this.fillForm(data);
         
-        await this.updateButton.click()
-        
+        await this.updateButton.click();
+        await this.page.waitForLoadState('networkidle');
     }
 }
 module.exports = { InforUpdatePage };

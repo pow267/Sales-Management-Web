@@ -57,6 +57,8 @@
     }
 
     function addFormHtml() {
+        const csrfToken = escapeHtml(state.session?.csrf_token || '');
+        const pageValue = escapeHtml(String(state.pagination?.page || 1));
         const options = state.brands.map((brand) => {
             return '<option value="' + escapeHtml(brand.ma_hs) + '">' + escapeHtml(brand.ten_hs) + '</option>';
         }).join('');
@@ -65,6 +67,8 @@
             '<div class="add-form">' +
                 '<div class="form-title">THÊM SỮA MỚI</div>' +
                 '<form method="POST" action="/api/products" enctype="multipart/form-data" id="addForm">' +
+                    '<input type="hidden" name="csrf_token" value="' + csrfToken + '">' +
+                    '<input type="hidden" name="page" value="' + pageValue + '">' +
                     '<div class="form-row"><label>Tên sữa</label><input type="text" name="ten_sua" required></div>' +
                     '<div class="form-row"><label>Hãng sữa</label><select name="ma_hang_sua" required>' + options + '</select></div>' +
                     '<div class="form-row"><label>Loại sữa</label><input type="text" name="loai_sua"></div>' +
@@ -83,6 +87,8 @@
             return '';
         }
 
+        const csrfToken = escapeHtml(state.session?.csrf_token || '');
+        const pageValue = escapeHtml(String(state.pagination?.page || 1));
         const options = state.brands.map((brand) => {
             const selected = String(brand.ma_hs) === String(state.detail.ma_hang_sua) ? ' selected' : '';
             return '<option value="' + escapeHtml(brand.ma_hs) + '"' + selected + '>' + escapeHtml(brand.ten_hs) + '</option>';
@@ -92,6 +98,8 @@
             '<div class="add-form" id="formsua">' +
                 '<div class="form-title">SỬA THÔNG TIN SẢN PHẨM</div>' +
                 '<form method="POST" action="/api/products/' + state.detail.id + '" enctype="multipart/form-data" id="editForm">' +
+                    '<input type="hidden" name="csrf_token" value="' + csrfToken + '">' +
+                    '<input type="hidden" name="page" value="' + pageValue + '">' +
                     '<input type="hidden" name="id" value="' + state.detail.id + '">' +
                     '<input type="hidden" name="hinh_cu" value="' + escapeHtml(state.detail.hinh || '') + '">' +
                     '<div class="form-row"><label>Tên sữa</label><input type="text" name="ten_sua" value="' + escapeHtml(state.detail.ten_sua) + '" required></div>' +
@@ -176,6 +184,8 @@
     function renderAdminActions() {
         const user = state.session?.user;
         const isAdmin = user && user.role === 'admin';
+        const csrfToken = escapeHtml(state.session?.csrf_token || '');
+        const pageValue = escapeHtml(String(state.pagination?.page || 1));
 
         if (!isAdmin) {
             refs.adminActions.innerHTML = '';
@@ -188,6 +198,9 @@
             html += '<a href="' + buildUrl({ action: 'sua', id: state.detail.id }) + '#formsua" class="add-btn">SỬA THÔNG TIN</a>';
             html += '' +
                 '<form method="POST" action="/api/products/' + state.detail.id + '" class="inline-block" id="deleteProductForm">' +
+                    '<input type="hidden" name="_method" value="DELETE">' +
+                    '<input type="hidden" name="csrf_token" value="' + csrfToken + '">' +
+                    '<input type="hidden" name="page" value="' + pageValue + '">' +
                     '<button type="submit" class="add-btn">XÓA SẢN PHẨM</button>' +
                 '</form>';
         }
@@ -460,8 +473,8 @@
 
             const submitBtn = form.querySelector('button[type="submit"]');
             const formData = new FormData(form);
-            formData.append('csrf_token', state.session.csrf_token);
-            formData.append('page', String(state.pagination?.page || 1));
+            formData.set('csrf_token', state.session.csrf_token);
+            formData.set('page', String(state.pagination?.page || 1));
 
             submitBtn.disabled = true;
 

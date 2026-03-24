@@ -4,7 +4,10 @@
     async function request(url, options) {
         const config = options || {};
         const headers = Object.assign(
-            { Accept: 'application/json' },
+            {
+                Accept: 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
             config.headers || {}
         );
 

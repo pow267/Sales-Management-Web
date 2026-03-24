@@ -25,7 +25,7 @@ test.describe('Chức năng xóa sản phẩm', () => {
 
         await deletePage.deleteById(id);
 
-        await expect(page).toHaveURL(/page=\d+#chitiet/);
+        await expect(page).toHaveURL(/\/\?page=\d+$/);
         await page.reload();
         await expect(deletePage.productCard(name)).toHaveCount(0);
         console.log('Xóa sản phẩm thành công');
