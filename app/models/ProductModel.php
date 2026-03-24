@@ -96,16 +96,40 @@ class ProductModel
 
     public function insert(array $data): int
     {
-        $stmt = $this->conn->prepare("
-            INSERT INTO products
-            (ten_sua, ma_hang_sua, loai_sua, trong_luong, don_gia, tpdd, loi_ich, hinh)
-            VALUES
-            (:ten_sua, :ma_hang_sua, :loai_sua, :trong_luong, :don_gia, :tpdd, :loi_ich, :hinh)
-        ");
+        $ownsTransaction = !$this->conn->inTransaction();
 
-        $stmt->execute($data);
+        if ($ownsTransaction) {
+            $this->conn->beginTransaction();
+        }
 
-        return (int)$this->conn->lastInsertId();
+        try {
+            // Lock product writes so concurrent requests do not pick the same recycled ID.
+            $this->conn->exec('LOCK TABLE products IN EXCLUSIVE MODE');
+
+            $data['id'] = $this->getNextAvailableId();
+
+            $stmt = $this->conn->prepare("
+                INSERT INTO products
+                (id, ten_sua, ma_hang_sua, loai_sua, trong_luong, don_gia, tpdd, loi_ich, hinh)
+                VALUES
+                (:id, :ten_sua, :ma_hang_sua, :loai_sua, :trong_luong, :don_gia, :tpdd, :loi_ich, :hinh)
+            ");
+
+            $stmt->execute($data);
+            $this->syncIdSequence();
+
+            if ($ownsTransaction) {
+                $this->conn->commit();
+            }
+
+            return (int)$data['id'];
+        } catch (Throwable $e) {
+            if ($ownsTransaction && $this->conn->inTransaction()) {
+                $this->conn->rollBack();
+            }
+
+            throw $e;
+        }
     }
 
     public function update(array $data): void
@@ -133,5 +157,45 @@ class ProductModel
         ");
 
         $stmt->execute(['id' => $id]);
+    }
+
+    private function getNextAvailableId(): int
+    {
+        $stmt = $this->conn->query("
+            SELECT COALESCE(
+                (
+                    SELECT CASE
+                        WHEN NOT EXISTS (
+                            SELECT 1
+                            FROM products
+                            WHERE id = 1
+                        ) THEN 1
+                        ELSE (
+                            SELECT current_ids.id + 1
+                            FROM products current_ids
+                            LEFT JOIN products next_ids
+                                ON next_ids.id = current_ids.id + 1
+                            WHERE next_ids.id IS NULL
+                            ORDER BY current_ids.id
+                            LIMIT 1
+                        )
+                    END
+                ),
+                1
+            ) AS next_id
+        ");
+
+        return (int)$stmt->fetchColumn();
+    }
+
+    private function syncIdSequence(): void
+    {
+        $this->conn->query("
+            SELECT setval(
+                pg_get_serial_sequence('products', 'id'),
+                COALESCE((SELECT MAX(id) FROM products), 1),
+                EXISTS (SELECT 1 FROM products)
+            )
+        ");
     }
 }

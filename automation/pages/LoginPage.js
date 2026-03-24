@@ -5,7 +5,7 @@ class LoginPage {
         this.usernameInput = page.locator('input[name="username"]');
         this.passwordInput = page.locator('input[name="password"]');
         this.error = page.locator('.form-message-error')
-        this.buttonLogin = page.getByRole('button', { name: 'Đăng nhập'});
+        this.buttonLogin = page.locator('#loginSubmitBtn');
         this.successLogin = page.getByText('Xin chào');
         
     }

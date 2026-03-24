@@ -7,11 +7,12 @@ test.describe('Kiểm tra trang sản phẩm', () => {
 
     test.beforeEach( async ({page}) => {
         productPage = new ProductPage(page);
-
         await productPage.goto();
+        await expect(productPage.productCard.first()).toBeVisible();
     });
 
     test('PRL_TC01 - Hiển thị danh sách sản phẩm', async () => {
+
         const count = await productPage.productCard.count();
         expect(count).toBeGreaterThan(0);
         await expect(productPage.productCard.first()).toBeVisible();

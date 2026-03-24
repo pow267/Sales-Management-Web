@@ -50,7 +50,7 @@ test.describe('Chức năng cập nhật lại thông tin sản phẩm', () => {
         const deletePage = new DeletePage(page);
 
         await deletePage.deleteById(id);
-        await expect(page).toHaveURL(/page=\d+#chitiet/);
+        await expect(page).toHaveURL(/\/\?page=\d+$/);
 
     });
 });
