@@ -53,21 +53,21 @@ class ApiProductController
     public function store(): void
     {
         $this->ensureAdmin();
+        $this->assertCsrf($_POST);
         $page = max(1, (int)($_POST['page'] ?? 1));
-        $redirect = '/?action=them&page=' . $page;
-        $this->assertCsrf($_POST, $redirect);
 
         try {
             $product = $this->productService->create($_POST, $_FILES);
             $_SESSION['flash'] = 'Thêm sản phẩm thành công!';
-            $this->respondSuccess([
+
+            ApiResponse::success([
                 'product' => $product,
                 'redirect' => '/?id=' . $product['id'] . '&page=' . $page . '#chitiet'
             ], 'Thêm sản phẩm thành công.', 201);
         } catch (InvalidArgumentException $e) {
-            $this->respondError($e->getMessage(), 422, $redirect);
+            ApiResponse::error($e->getMessage(), 422);
         } catch (RuntimeException $e) {
-            $this->respondError($e->getMessage(), 400, $redirect);
+            ApiResponse::error($e->getMessage(), 400);
         }
     }
 
@@ -77,21 +77,21 @@ class ApiProductController
 
         $payload = $_POST;
         $payload['id'] = $id;
+        $this->assertCsrf($payload);
         $page = max(1, (int)($payload['page'] ?? 1));
-        $redirect = '/?id=' . $id . '&page=' . $page . '&action=sua#formsua';
-        $this->assertCsrf($payload, $redirect);
 
         try {
             $product = $this->productService->update($id, $payload, $_FILES);
             $_SESSION['flash'] = 'Cập nhật thành công!';
-            $this->respondSuccess([
+
+            ApiResponse::success([
                 'product' => $product,
                 'redirect' => '/?id=' . $product['id'] . '&page=' . $page . '#chitiet'
             ], 'Cập nhật thành công.');
         } catch (InvalidArgumentException $e) {
-            $this->respondError($e->getMessage(), 422, $redirect);
+            ApiResponse::error($e->getMessage(), 422);
         } catch (RuntimeException $e) {
-            $this->respondError($e->getMessage(), 400, $redirect);
+            ApiResponse::error($e->getMessage(), 400);
         }
     }
 
@@ -100,19 +100,18 @@ class ApiProductController
         $this->ensureAdmin();
 
         $payload = ApiResponse::input();
+        $this->assertCsrf($payload);
         $page = max(1, (int)($payload['page'] ?? 1));
-        $redirect = '/?id=' . $id . '&page=' . $page . '#chitiet';
-        $this->assertCsrf($payload, $redirect);
 
         try {
             $this->productService->delete($id);
             $_SESSION['flash'] = 'Xóa sản phẩm thành công!';
 
-            $this->respondSuccess([
+            ApiResponse::success([
                 'redirect' => '/?page=' . $page
             ], 'Xóa sản phẩm thành công.');
         } catch (RuntimeException $e) {
-            $this->respondError($e->getMessage(), 404, $redirect);
+            ApiResponse::error($e->getMessage(), 404);
         }
     }
 
@@ -134,44 +133,10 @@ class ApiProductController
         }
     }
 
-    private function assertCsrf(array $payload, string $redirect): void
+    private function assertCsrf(array $payload): void
     {
         if (!$this->authService->validateCsrf($payload['csrf_token'] ?? null)) {
-            $this->respondError('Invalid CSRF token.', 419, $redirect);
+            ApiResponse::error('Invalid CSRF token.', 419);
         }
-    }
-
-    private function respondSuccess(array $data, string $message, int $status = 200): void
-    {
-        if ($this->expectsJson()) {
-            ApiResponse::success($data, $message, $status);
-        }
-
-        $this->redirectTo((string)($data['redirect'] ?? '/'));
-    }
-
-    private function respondError(string $message, int $status, string $redirect): void
-    {
-        if ($this->expectsJson()) {
-            ApiResponse::error($message, $status);
-        }
-
-        $_SESSION['flash'] = $message;
-        $this->redirectTo($redirect);
-    }
-
-    private function expectsJson(): bool
-    {
-        $accept = $_SERVER['HTTP_ACCEPT'] ?? '';
-        $requestedWith = strtolower($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '');
-
-        return stripos($accept, 'application/json') !== false
-            || $requestedWith === 'xmlhttprequest';
-    }
-
-    private function redirectTo(string $location): void
-    {
-        header('Location: ' . $location);
-        exit;
     }
 }

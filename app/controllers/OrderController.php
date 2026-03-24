@@ -1,10 +1,12 @@
 <?php
 
 require_once __DIR__ . '/../services/OrderService.php';
+require_once __DIR__ . '/../services/AuthService.php';
 require_once __DIR__ . '/../middleware/AuthMiddleware.php';
 
 class OrderController
 {
+    private AuthService $authService;
     private OrderService $service;
 
     public function __construct()
@@ -14,6 +16,7 @@ class OrderController
         }
 
         AuthMiddleware::check();
+        $this->authService = new AuthService();
         $this->service = new OrderService();
     }
 
@@ -30,7 +33,7 @@ class OrderController
 
     public function store(): void
     {
-        if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'] ?? '')) {
+        if (!$this->authService->validateCsrf($_POST['csrf_token'] ?? null)) {
             exit('Invalid CSRF token');
         }
 
