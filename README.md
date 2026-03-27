@@ -19,8 +19,6 @@ npm install
 
 ### 4. Run test
 - cd "automation"
-- Thêm seed: npm run seed
-- npx playwright test --ui
 - Reset database: npm run reset
 - Seed database: npm run seed
 - Run test (Native): npx playwright test --ui
