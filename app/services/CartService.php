@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../models/ProductModel.php';
 require_once __DIR__ . '/AuthService.php';
+require_once __DIR__ . '/../helpers/ValidationException.php';
 
 class CartService
 {
@@ -69,17 +70,20 @@ class CartService
     public function add(int $productId, int $quantity = 1): array
     {
         if ($productId <= 0) {
-            throw new RuntimeException('Mã sản phẩm không hợp lệ.');
+            throw new InvalidArgumentException('Mã sản phẩm không hợp lệ.');
         }
 
         if ($quantity <= 0) {
-            $quantity = 1;
+            throw new ValidationException(
+                'Số lượng phải lớn hơn 0.',
+                ['quantity' => 'Số lượng phải lớn hơn 0.']
+            );
         }
 
         $product = $this->productModel->getById($productId);
 
         if (!$product) {
-            throw new RuntimeException('Sản phẩm không tồn tại.');
+            throw new OutOfBoundsException('Sản phẩm không tồn tại.');
         }
 
         if (!isset($_SESSION['cart'][$productId])) {
@@ -93,6 +97,10 @@ class CartService
 
     public function remove(int $productId): array
     {
+        if (!isset($_SESSION['cart'][$productId])) {
+            throw new OutOfBoundsException('Sản phẩm không có trong giỏ hàng.');
+        }
+
         unset($_SESSION['cart'][$productId]);
         return $this->getSummary();
     }

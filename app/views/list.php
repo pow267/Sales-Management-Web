@@ -32,6 +32,8 @@
         </script>
     <?php endif; ?>
 
+    <div id="pageMessage"></div>
+
     <div class="search-section">
         <input
             type="text"

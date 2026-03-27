@@ -188,52 +188,70 @@
       @apply flex justify-center gap-6 my-10 flex-wrap;
     }
 
-    /* ================= FORM ================= */
+/* ================= FORM ================= */
 
-    .add-form {
-      @apply max-w-[800px] mx-auto my-6
-            border border-red-500 rounded-xl
-            px-10 py-6 bg-white shadow-md;
-      animation: slideFadeIn 0.4s ease forwards;
-    }
+.add-form {
+  @apply max-w-[800px] mx-auto my-6
+        border border-red-500 rounded-xl
+        px-10 py-6 bg-white shadow-md;
+  animation: slideFadeIn 0.4s ease forwards;
+}
 
-    .form-title {
-      @apply bg-red-500 text-white text-[22px] font-bold
-            py-3 text-center mb-6 rounded-t-lg;
-    }
+.form-title {
+  @apply bg-red-500 text-white text-[22px] font-bold
+        py-3 text-center mb-6 rounded-t-lg;
+}
 
-    .form-row {
-      @apply flex items-center mb-5;
-    }
+.form-row {
+  @apply flex items-start mb-5;
+}
 
-    .form-row label {
-      @apply w-[180px] font-semibold text-right
-            mr-4 text-gray-600;
-    }
+.form-row label {
+  @apply w-[180px] font-semibold text-right mr-4 text-gray-600;
+  padding-top: 0.5rem;
+}
 
-    .form-row input,
-    .form-row select,
-    .form-row textarea {
-      @apply flex-1 px-3 py-2 text-sm
-            border border-gray-300 rounded-md;
-      transition: all 0.2s ease;
-    }
+.form-field {
+  @apply flex-1 w-full;
+  max-width: 500px;
+}
 
-    .form-row input:focus,
-    .form-row select:focus,
-    .form-row textarea:focus {
-      outline: none;
-      border-color: #ef4444;
-      box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
-    }
+.field-error {
+  @apply mb-2 text-sm font-medium text-red-500;
+}
 
-    .form-row textarea {
-      @apply h-[120px] resize-none overflow-y-auto;
-    }
+.form-row input,
+.form-row select,
+.form-row textarea {
+  @apply w-full px-3 py-2 text-sm
+        border border-gray-300 rounded-md;
+  transition: all 0.2s ease;
+}
 
-    .form-actions {
-      @apply text-center mt-6;
-    }
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.15);
+}
+
+.form-row textarea {
+  min-height: 120px;
+  resize: none;
+  overflow-y: auto;
+}
+
+.form-row input.input-invalid,
+.form-row select.input-invalid,
+.form-row textarea.input-invalid {
+  @apply border-red-500 bg-red-50;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.12);
+}
+
+.form-actions {
+  @apply text-center mt-6;
+}
 
     /* ================= DETAIL ================= */
 

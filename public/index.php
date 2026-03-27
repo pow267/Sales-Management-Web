@@ -9,122 +9,147 @@ require_once __DIR__ . '/../app/controllers/CheckoutController.php';
 require_once __DIR__ . '/../app/controllers/ApiAuthController.php';
 require_once __DIR__ . '/../app/controllers/ApiProductController.php';
 require_once __DIR__ . '/../app/controllers/ApiCartController.php';
-require_once __DIR__ . '/../app/controllers/ApiCheckoutController.php';
 require_once __DIR__ . '/../app/controllers/ApiUserController.php';
 require_once __DIR__ . '/../app/controllers/ApiOrderController.php';
 
+function apiJson(array $payload, int $status, array $headers = []): void
+{
+    http_response_code($status);
+
+    foreach ($headers as $name => $value) {
+        header($name . ': ' . $value);
+    }
+
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(
+        $payload,
+        JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+    );
+    exit;
+}
+
+function apiNotFound(): void
+{
+    apiJson([
+        'success' => false,
+        'message' => 'API endpoint không tồn tại.'
+    ], 404);
+}
+
+function apiMethodNotAllowed(array $allowedMethods): void
+{
+    $allowedMethods = array_values(array_unique($allowedMethods));
+    sort($allowedMethods);
+
+    apiJson([
+        'success' => false,
+        'message' => 'Method không được hỗ trợ cho endpoint này.',
+        'allowed_methods' => $allowedMethods
+    ], 405, [
+        'Allow' => implode(', ', $allowedMethods)
+    ]);
+}
+
 function routeApi(string $uri, string $method): void
 {
-    if ($uri === '/api/auth/session' && $method === 'GET') {
-        (new ApiAuthController())->session();
-        return;
-    }
+    $exactRoutes = [
+        '/api/session' => [
+            'GET' => fn() => (new ApiAuthController())->session(),
+            'POST' => fn() => (new ApiAuthController())->storeSession(),
+            'DELETE' => fn() => (new ApiAuthController())->destroySession()
+        ],
+        '/api/brands' => [
+            'GET' => fn() => (new ApiProductController())->brands()
+        ],
+        '/api/products' => [
+            'GET' => fn() => (new ApiProductController())->index(),
+            'POST' => fn() => (new ApiProductController())->store()
+        ],
+        '/api/cart' => [
+            'GET' => fn() => (new ApiCartController())->index()
+        ],
+        '/api/cart/items' => [
+            'POST' => fn() => (new ApiCartController())->storeItem()
+        ],
+        '/api/users' => [
+            'GET' => fn() => (new ApiUserController())->index(),
+            'POST' => fn() => (new ApiUserController())->store()
+        ],
+        '/api/orders' => [
+            'GET' => fn() => (new ApiOrderController())->index(),
+            'POST' => fn() => (new ApiOrderController())->store()
+        ]
+    ];
 
-    if ($uri === '/api/auth/login' && $method === 'POST') {
-        (new ApiAuthController())->login();
-        return;
-    }
+    if (isset($exactRoutes[$uri])) {
+        if (isset($exactRoutes[$uri][$method])) {
+            $exactRoutes[$uri][$method]();
+            return;
+        }
 
-    if ($uri === '/api/auth/register' && $method === 'POST') {
-        (new ApiAuthController())->register();
-        return;
-    }
-
-    if ($uri === '/api/auth/logout' && $method === 'POST') {
-        (new ApiAuthController())->logout();
-        return;
-    }
-
-    if ($uri === '/api/brands' && $method === 'GET') {
-        (new ApiProductController())->brands();
-        return;
-    }
-
-    if ($uri === '/api/products' && $method === 'GET') {
-        (new ApiProductController())->index();
-        return;
-    }
-
-    if ($uri === '/api/products' && $method === 'POST') {
-        (new ApiProductController())->store();
-        return;
+        apiMethodNotAllowed(array_keys($exactRoutes[$uri]));
     }
 
     if (preg_match('#^/api/products/(\d+)$#', $uri, $matches)) {
         $id = (int)$matches[1];
+        $routes = [
+            'GET' => fn() => (new ApiProductController())->show($id),
+            'PUT' => fn() => (new ApiProductController())->update($id),
+            'PATCH' => fn() => (new ApiProductController())->update($id),
+            'DELETE' => fn() => (new ApiProductController())->destroy($id)
+        ];
 
-        if ($method === 'GET') {
-            (new ApiProductController())->show($id);
+        if (isset($routes[$method])) {
+            $routes[$method]();
             return;
         }
 
-        if ($method === 'POST') {
-            (new ApiProductController())->update($id);
+        apiMethodNotAllowed(array_keys($routes));
+    }
+
+    if (preg_match('#^/api/cart/items/(\d+)$#', $uri, $matches)) {
+        $productId = (int)$matches[1];
+        $routes = [
+            'DELETE' => fn() => (new ApiCartController())->destroyItem($productId)
+        ];
+
+        if (isset($routes[$method])) {
+            $routes[$method]();
             return;
         }
 
-        if ($method === 'DELETE') {
-            (new ApiProductController())->destroy($id);
+        apiMethodNotAllowed(array_keys($routes));
+    }
+
+    if (preg_match('#^/api/users/(\d+)$#', $uri, $matches)) {
+        $id = (int)$matches[1];
+        $routes = [
+            'GET' => fn() => (new ApiUserController())->show($id)
+        ];
+
+        if (isset($routes[$method])) {
+            $routes[$method]();
             return;
         }
+
+        apiMethodNotAllowed(array_keys($routes));
     }
 
-    if ($uri === '/api/cart' && $method === 'GET') {
-        (new ApiCartController())->index();
-        return;
+    if (preg_match('#^/api/orders/(\d+)$#', $uri, $matches)) {
+        $id = (int)$matches[1];
+        $routes = [
+            'GET' => fn() => (new ApiOrderController())->show($id)
+        ];
+
+        if (isset($routes[$method])) {
+            $routes[$method]();
+            return;
+        }
+
+        apiMethodNotAllowed(array_keys($routes));
     }
 
-    if ($uri === '/api/cart/items' && $method === 'POST') {
-        (new ApiCartController())->storeItem();
-        return;
-    }
-
-    if (preg_match('#^/api/cart/items/(\d+)$#', $uri, $matches) && $method === 'DELETE') {
-        (new ApiCartController())->destroyItem((int)$matches[1]);
-        return;
-    }
-
-    if ($uri === '/api/checkout' && $method === 'POST') {
-        (new ApiCheckoutController())->store();
-        return;
-    }
-
-    if ($uri === '/api/users' && $method === 'GET') {
-        (new ApiUserController())->index();
-        return;
-    }
-
-    if ($uri === '/api/users/me' && $method === 'GET') {
-        (new ApiUserController())->me();
-        return;
-    }
-
-    if (preg_match('#^/api/users/(\d+)$#', $uri, $matches) && $method === 'GET') {
-        (new ApiUserController())->show((int)$matches[1]);
-        return;
-    }
-
-    if ($uri === '/api/orders' && $method === 'GET') {
-        (new ApiOrderController())->index();
-        return;
-    }
-
-    if ($uri === '/api/orders' && $method === 'POST') {
-        (new ApiOrderController())->store();
-        return;
-    }
-
-    if (preg_match('#^/api/orders/(\d+)$#', $uri, $matches) && $method === 'GET') {
-        (new ApiOrderController())->show((int)$matches[1]);
-        return;
-    }
-
-    http_response_code(404);
-    header('Content-Type: application/json; charset=utf-8');
-    echo json_encode([
-        'success' => false,
-        'message' => 'API endpoint không tồn tại.'
-    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    apiNotFound();
 }
 
 function methodNotAllowed(array $allowedMethods): void

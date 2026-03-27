@@ -31,6 +31,8 @@ GIỎ HÀNG
     </script>
 <?php endif; ?>
 
+<div id="cartMessage"></div>
+
 <div id="cartContent">
     <p class="text-center text-gray-500 py-10">Đang tải giỏ hàng...</p>
 </div>

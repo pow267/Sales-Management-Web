@@ -14,8 +14,41 @@
         pagination: document.getElementById('pagination'),
         adminActions: document.getElementById('adminActions'),
         detailSection: document.getElementById('detailSection'),
-        formSection: document.getElementById('formSection')
+        formSection: document.getElementById('formSection'),
+        pageMessage: document.getElementById('pageMessage')
     };
+
+    function clearPageMessage() {
+        window.apiClient.clearMessage(refs.pageMessage);
+    }
+
+    function renderPageMessage(message) {
+        window.apiClient.renderMessage(refs.pageMessage, message);
+    }
+
+    function clearFormMessage(form) {
+        if (!(form instanceof HTMLFormElement)) {
+            return;
+        }
+
+        const container = form.querySelector('[data-form-message]');
+
+        if (container instanceof HTMLElement) {
+            window.apiClient.clearMessage(container);
+        }
+    }
+
+    function renderFormMessage(form, message) {
+        if (!(form instanceof HTMLFormElement)) {
+            return;
+        }
+
+        const container = form.querySelector('[data-form-message]');
+
+        if (container instanceof HTMLElement) {
+            window.apiClient.renderMessage(container, message);
+        }
+    }
 
     function escapeHtml(value) {
         return String(value ?? '')
@@ -56,6 +89,19 @@
         }) + '#chitiet';
     }
 
+    function formRowHtml(label, fieldName, controlHtml, labelFor) {
+        const forAttribute = labelFor ? ' for="' + escapeHtml(labelFor) + '"' : '';
+
+        return '' +
+            '<div class="form-row">' +
+                '<label' + forAttribute + '>' + label + '</label>' +
+                '<div class="form-field">' +
+                    '<div class="field-error" data-field-error="' + escapeHtml(fieldName) + '" hidden></div>' +
+                    controlHtml +
+                '</div>' +
+            '</div>';
+    }
+
     function addFormHtml() {
         const csrfToken = escapeHtml(state.session?.csrf_token || '');
         const pageValue = escapeHtml(String(state.pagination?.page || 1));
@@ -67,16 +113,57 @@
             '<div class="add-form">' +
                 '<div class="form-title">THÊM SỮA MỚI</div>' +
                 '<form method="POST" action="/api/products" enctype="multipart/form-data" id="addForm">' +
+                    '<div data-form-message></div>' +
                     '<input type="hidden" name="csrf_token" value="' + csrfToken + '">' +
                     '<input type="hidden" name="page" value="' + pageValue + '">' +
-                    '<div class="form-row"><label>Tên sữa</label><input type="text" name="ten_sua" required></div>' +
-                    '<div class="form-row"><label>Hãng sữa</label><select name="ma_hang_sua" required>' + options + '</select></div>' +
-                    '<div class="form-row"><label>Loại sữa</label><input type="text" name="loai_sua"></div>' +
-                    '<div class="form-row"><label>Trọng lượng</label><input type="number" name="trong_luong" required></div>' +
-                    '<div class="form-row"><label>Đơn giá</label><input type="number" name="don_gia" required></div>' +
-                    '<div class="form-row"><label for="dd">Thành phần dinh dưỡng</label><textarea id="dd" name="tpdd"></textarea></div>' +
-                    '<div class="form-row"><label for="li">Lợi ích</label><textarea id="li" name="loi_ich"></textarea></div>' +
-                    '<div class="form-row"><label>Hình ảnh</label><input type="file" name="hinh"></div>' +
+                    formRowHtml(
+                        'Tên sữa',
+                        'ten_sua',
+                        '<input id="add-ten-sua" type="text" name="ten_sua" required>',
+                        'add-ten-sua'
+                    ) +
+                    formRowHtml(
+                        'Hãng sữa',
+                        'ma_hang_sua',
+                        '<select id="add-ma-hang-sua" name="ma_hang_sua" required>' + options + '</select>',
+                        'add-ma-hang-sua'
+                    ) +
+                    formRowHtml(
+                        'Loại sữa',
+                        'loai_sua',
+                        '<input id="add-loai-sua" type="text" name="loai_sua">',
+                        'add-loai-sua'
+                    ) +
+                    formRowHtml(
+                        'Trọng lượng',
+                        'trong_luong',
+                        '<input id="add-trong-luong" type="number" name="trong_luong" required>',
+                        'add-trong-luong'
+                    ) +
+                    formRowHtml(
+                        'Đơn giá',
+                        'don_gia',
+                        '<input id="add-don-gia" type="number" name="don_gia" required>',
+                        'add-don-gia'
+                    ) +
+                    formRowHtml(
+                        'Thành phần dinh dưỡng',
+                        'tpdd',
+                        '<textarea id="add-tpdd" name="tpdd"></textarea>',
+                        'add-tpdd'
+                    ) +
+                    formRowHtml(
+                        'Lợi ích',
+                        'loi_ich',
+                        '<textarea id="add-loi-ich" name="loi_ich"></textarea>',
+                        'add-loi-ich'
+                    ) +
+                    formRowHtml(
+                        'Hình ảnh',
+                        'hinh',
+                        '<input id="add-hinh" type="file" name="hinh" accept=".png,.jpg,.jpeg,image/png,image/jpeg">',
+                        'add-hinh'
+                    ) +
                     '<div class="form-actions"><button type="button" id="addSubmitBtn">Thêm mới</button></div>' +
                 '</form>' +
             '</div>';
@@ -98,18 +185,60 @@
             '<div class="add-form" id="formsua">' +
                 '<div class="form-title">SỬA THÔNG TIN SẢN PHẨM</div>' +
                 '<form method="POST" action="/api/products/' + state.detail.id + '" enctype="multipart/form-data" id="editForm">' +
+                    '<div data-form-message></div>' +
+                    '<input type="hidden" name="_method" value="PATCH">' +
                     '<input type="hidden" name="csrf_token" value="' + csrfToken + '">' +
                     '<input type="hidden" name="page" value="' + pageValue + '">' +
                     '<input type="hidden" name="id" value="' + state.detail.id + '">' +
                     '<input type="hidden" name="hinh_cu" value="' + escapeHtml(state.detail.hinh || '') + '">' +
-                    '<div class="form-row"><label>Tên sữa</label><input type="text" name="ten_sua" value="' + escapeHtml(state.detail.ten_sua) + '" required></div>' +
-                    '<div class="form-row"><label>Hãng sữa</label><select name="ma_hang_sua" required>' + options + '</select></div>' +
-                    '<div class="form-row"><label>Loại sữa</label><input type="text" name="loai_sua" value="' + escapeHtml(state.detail.loai_sua) + '"></div>' +
-                    '<div class="form-row"><label>Trọng lượng</label><input type="number" name="trong_luong" value="' + escapeHtml(state.detail.trong_luong) + '" required></div>' +
-                    '<div class="form-row"><label>Đơn giá</label><input type="number" name="don_gia" value="' + escapeHtml(state.detail.don_gia) + '" required></div>' +
-                    '<div class="form-row"><label>Thành phần dinh dưỡng</label><textarea name="tpdd">' + escapeHtml(state.detail.tpdd) + '</textarea></div>' +
-                    '<div class="form-row"><label>Lợi ích</label><textarea name="loi_ich">' + escapeHtml(state.detail.loi_ich) + '</textarea></div>' +
-                    '<div class="form-row"><label>Hình ảnh mới</label><input type="file" name="hinh"></div>' +
+                    formRowHtml(
+                        'Tên sữa',
+                        'ten_sua',
+                        '<input id="edit-ten-sua" type="text" name="ten_sua" value="' + escapeHtml(state.detail.ten_sua) + '" required>',
+                        'edit-ten-sua'
+                    ) +
+                    formRowHtml(
+                        'Hãng sữa',
+                        'ma_hang_sua',
+                        '<select id="edit-ma-hang-sua" name="ma_hang_sua" required>' + options + '</select>',
+                        'edit-ma-hang-sua'
+                    ) +
+                    formRowHtml(
+                        'Loại sữa',
+                        'loai_sua',
+                        '<input id="edit-loai-sua" type="text" name="loai_sua" value="' + escapeHtml(state.detail.loai_sua) + '">',
+                        'edit-loai-sua'
+                    ) +
+                    formRowHtml(
+                        'Trọng lượng',
+                        'trong_luong',
+                        '<input id="edit-trong-luong" type="number" name="trong_luong" value="' + escapeHtml(state.detail.trong_luong) + '" required>',
+                        'edit-trong-luong'
+                    ) +
+                    formRowHtml(
+                        'Đơn giá',
+                        'don_gia',
+                        '<input id="edit-don-gia" type="number" name="don_gia" value="' + escapeHtml(state.detail.don_gia) + '" required>',
+                        'edit-don-gia'
+                    ) +
+                    formRowHtml(
+                        'Thành phần dinh dưỡng',
+                        'tpdd',
+                        '<textarea id="edit-tpdd" name="tpdd">' + escapeHtml(state.detail.tpdd) + '</textarea>',
+                        'edit-tpdd'
+                    ) +
+                    formRowHtml(
+                        'Lợi ích',
+                        'loi_ich',
+                        '<textarea id="edit-loi-ich" name="loi_ich">' + escapeHtml(state.detail.loi_ich) + '</textarea>',
+                        'edit-loi-ich'
+                    ) +
+                    formRowHtml(
+                        'Hình ảnh mới',
+                        'hinh',
+                        '<input id="edit-hinh" type="file" name="hinh" accept=".png,.jpg,.jpeg,image/png,image/jpeg">',
+                        'edit-hinh'
+                    ) +
                     '<div class="form-actions"><button type="button" id="editSubmitBtn">Cập nhật</button></div>' +
                 '</form>' +
             '</div>';
@@ -125,7 +254,8 @@
 
         refs.topBarRight.innerHTML = '' +
             '<span style="margin-right:10px;">Xin chào, ' + escapeHtml(user.username) + '</span>' +
-            '<form method="POST" action="/api/auth/logout" id="logoutForm" class="inline-block">' +
+            '<form method="POST" action="/api/session" id="logoutForm" class="inline-block">' +
+                '<input type="hidden" name="_method" value="DELETE">' +
                 '<button type="submit" class="add-btn" id="logoutBtn">Đăng xuất</button>' +
             '</form>';
     }
@@ -220,11 +350,16 @@
         if (isAuthenticated) {
             cartHtml = '' +
                 '<form method="POST" action="/api/cart/items" id="addToCartForm" style="margin-top:15px;">' +
+                    '<div data-form-message></div>' +
                     '<input type="hidden" name="product_id" value="' + state.detail.id + '">' +
-                    '<div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">' +
-                        '<button type="button" data-qty-action="decrease" style="width:35px; height:35px;">-</button>' +
-                        '<input type="number" id="quantityInput" name="quantity" value="1" min="1" style="width:55px; height:35px; text-align:center;">' +
-                        '<button type="button" data-qty-action="increase" style="width:35px; height:35px;">+</button>' +
+                    '<div style="max-width:220px;">' +
+                        '<label for="quantityInput" style="display:block; margin-bottom:8px; font-weight:600;">Số lượng</label>' +
+                        '<div class="field-error" data-field-error="quantity" hidden></div>' +
+                        '<div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">' +
+                            '<button type="button" data-qty-action="decrease" style="width:35px; height:35px;">-</button>' +
+                            '<input type="number" id="quantityInput" name="quantity" value="1" min="1" style="width:55px; height:35px; text-align:center;">' +
+                            '<button type="button" data-qty-action="increase" style="width:35px; height:35px;">+</button>' +
+                        '</div>' +
                     '</div>' +
                     '<button type="submit" id="addToCartBtn" class="add-btn">THÊM VÀO GIỎ HÀNG</button>' +
                 '</form>';
@@ -283,6 +418,65 @@
 
         const current = Math.max(1, parseInt(input.value || '1', 10));
         input.value = Math.max(1, current + delta);
+
+        if (input.form) {
+            window.apiClient.clearFieldError(input.form, 'quantity');
+        }
+    }
+
+    function validateProductForm(form) {
+        const errors = {};
+        const tenSua = String(form.elements['ten_sua']?.value || '').trim();
+        const maHangSua = String(form.elements['ma_hang_sua']?.value || '').trim();
+        const trongLuongValue = String(form.elements['trong_luong']?.value || '').trim();
+        const donGiaValue = String(form.elements['don_gia']?.value || '').trim();
+        const trongLuong = Number(trongLuongValue);
+        const donGia = Number(donGiaValue);
+        const imageInput = form.elements['hinh'];
+
+        if (!tenSua) {
+            errors.ten_sua = 'Tên sữa không được để trống.';
+        }
+
+        if (!maHangSua) {
+            errors.ma_hang_sua = 'Hãng sữa không được để trống.';
+        }
+
+        if (!trongLuongValue || !Number.isFinite(trongLuong) || trongLuong <= 0) {
+            errors.trong_luong = 'Trọng lượng phải lớn hơn 0.';
+        }
+
+        if (!donGiaValue || !Number.isFinite(donGia) || donGia <= 0) {
+            errors.don_gia = 'Đơn giá phải lớn hơn 0.';
+        }
+
+        if (
+            imageInput instanceof HTMLInputElement &&
+            imageInput.files &&
+            imageInput.files.length > 0
+        ) {
+            const file = imageInput.files[0];
+            const acceptedTypes = ['image/png', 'image/jpeg'];
+
+            if (file.type && !acceptedTypes.includes(file.type)) {
+                errors.hinh = 'Chỉ chấp nhận ảnh PNG hoặc JPEG.';
+            }
+        }
+
+        return errors;
+    }
+
+    function validateAddToCartForm(form) {
+        const rawQuantity = String(form.elements['quantity']?.value || '').trim();
+        const quantity = Number(rawQuantity);
+
+        if (!rawQuantity || !Number.isInteger(quantity) || quantity <= 0) {
+            return {
+                quantity: 'Số lượng phải lớn hơn 0.'
+            };
+        }
+
+        return {};
     }
 
     async function submitProductForm(form) {
@@ -292,21 +486,41 @@
             return;
         }
 
+        clearFormMessage(form);
+
+        if (window.apiClient.renderFormErrors(form, validateProductForm(form))) {
+            return;
+        }
+
         const formData = new FormData(form);
+        const methodOverride = String(formData.get('_method') || '').toUpperCase();
+        const method = ['PUT', 'PATCH'].includes(methodOverride) ? methodOverride : 'POST';
         formData.set('csrf_token', state.session.csrf_token);
         formData.set('page', String(state.pagination?.page || 1));
+
+        if (method !== 'POST') {
+            formData.delete('_method');
+        }
 
         submitBtn.disabled = true;
 
         try {
             const response = await window.apiClient.request(form.action, {
-                method: 'POST',
+                method,
                 body: formData
             });
 
             window.location.href = response.data.redirect || '/';
         } catch (error) {
-            window.apiClient.showToast(error.message, 'error');
+            const hasFieldErrors = window.apiClient.renderFormErrors(
+                form,
+                error.payload?.errors
+            );
+
+            if (!hasFieldErrors) {
+                renderFormMessage(form, error.message);
+            }
+
             submitBtn.disabled = false;
         }
     }
@@ -327,12 +541,12 @@
 
             window.location.href = response.data.redirect || '/';
         } catch (error) {
-            window.apiClient.showToast(error.message, 'error');
+            renderPageMessage(error.message);
         }
     }
 
     async function loadSession() {
-        const response = await window.apiClient.request('/api/auth/session');
+        const response = await window.apiClient.request('/api/session');
 
         if (!response.data.authenticated) {
             window.location.href = '/login';
@@ -366,7 +580,7 @@
             state.detail = response.data.product;
         } catch (error) {
             state.detail = null;
-            window.apiClient.showToast(error.message, 'error');
+            renderPageMessage(error.message);
         }
     }
 
@@ -386,6 +600,7 @@
     }
 
     function render() {
+        clearPageMessage();
         renderTopBar();
         renderProducts();
         renderPagination();
@@ -483,7 +698,7 @@
 
             try {
                 const response = await window.apiClient.request(form.action, {
-                    method: 'POST',
+                    method: 'DELETE',
                     body: JSON.stringify({
                         csrf_token: state.session.csrf_token
                     })
@@ -491,7 +706,7 @@
 
                 window.location.href = response.data.redirect || '/login';
             } catch (error) {
-                window.apiClient.showToast(error.message, 'error');
+                renderPageMessage(error.message);
             }
 
             return;
@@ -500,7 +715,14 @@
         if (form.id === 'addToCartForm') {
             event.preventDefault();
 
-            const quantity = Math.max(1, parseInt(form.querySelector('input[name="quantity"]').value || '1', 10));
+            if (window.apiClient.renderFormErrors(form, validateAddToCartForm(form))) {
+                return;
+            }
+
+            const quantity = Math.max(
+                1,
+                parseInt(form.querySelector('input[name="quantity"]').value || '1', 10)
+            );
 
             try {
                 const response = await window.apiClient.request(form.action, {
@@ -514,7 +736,14 @@
 
                 window.location.href = response.data.redirect || '/cart';
             } catch (error) {
-                window.apiClient.showToast(error.message, 'error');
+                const hasFieldErrors = window.apiClient.renderFormErrors(
+                    form,
+                    error.payload?.errors
+                );
+
+                if (!hasFieldErrors) {
+                    renderFormMessage(form, error.message);
+                }
             }
 
             return;
@@ -544,6 +773,6 @@
     }
 
     init().catch((error) => {
-        window.apiClient.showToast(error.message || 'Không thể tải dữ liệu trang.', 'error');
+        renderPageMessage(error.message || 'Không thể tải dữ liệu trang.');
     });
 })();

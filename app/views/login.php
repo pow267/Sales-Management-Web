@@ -27,16 +27,22 @@
         <?php endif; ?>
     </div>
 
-    <form method="POST" action="/api/auth/login" id="loginForm">
+    <form method="POST" action="/api/session" id="loginForm" novalidate>
 
         <div class="form-row">
-            <label>Tên đăng nhập</label>
-            <input type="text" name="username" required>
+            <label for="loginUsername">Tên đăng nhập</label>
+            <div class="form-field">
+                <div class="field-error" data-field-error="username" hidden></div>
+                <input id="loginUsername" type="text" name="username" required>
+            </div>
         </div>
 
         <div class="form-row">
-            <label>Mật khẩu</label>
-            <input type="password" name="password" required>
+            <label for="loginPassword">Mật khẩu</label>
+            <div class="form-field">
+                <div class="field-error" data-field-error="password" hidden></div>
+                <input id="loginPassword" type="password" name="password" required>
+            </div>
         </div>
 
         <div class="form-actions form-actions-row">
@@ -69,13 +75,24 @@ function renderLoginMessage(message) {
 loginForm?.addEventListener('submit', async (event) => {
     event.preventDefault();
 
-    loginSubmitBtn.disabled = true;
+    const usernameInput = loginForm.elements['username'];
+    const passwordInput = loginForm.elements['password'];
 
+    authMessage.replaceChildren();
+
+    const usernameVal = usernameInput.value.trim();
+    const passwordVal = passwordInput.value.trim();
+
+    if (!usernameVal || !passwordVal) {
+        renderLoginMessage('Vui lòng nhập tên đăng nhập và mật khẩu.');
+        return;
+    }
+
+    loginSubmitBtn.disabled = true;
     try {
-        const formData = new FormData(loginForm);
         const payload = {
-            username: formData.get('username'),
-            password: formData.get('password')
+            username: usernameVal,
+            password: passwordVal
         };
 
         const response = await window.apiClient.request(loginForm.action, {

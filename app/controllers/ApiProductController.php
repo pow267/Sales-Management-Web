@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../helpers/ApiResponse.php';
+require_once __DIR__ . '/../helpers/ValidationException.php';
 require_once __DIR__ . '/../services/AuthService.php';
 require_once __DIR__ . '/../services/ProductService.php';
 
@@ -53,21 +54,28 @@ class ApiProductController
     public function store(): void
     {
         $this->ensureAdmin();
-        $this->assertCsrf($_POST);
-        $page = max(1, (int)($_POST['page'] ?? 1));
+        $payload = ApiResponse::input();
+        $this->assertCsrf($payload);
+        $page = max(1, (int)($payload['page'] ?? 1));
 
         try {
-            $product = $this->productService->create($_POST, $_FILES);
+            $product = $this->productService->create($payload, ApiResponse::files());
             $_SESSION['flash'] = 'Thêm sản phẩm thành công!';
 
             ApiResponse::success([
                 'product' => $product,
                 'redirect' => '/?id=' . $product['id'] . '&page=' . $page . '#chitiet'
             ], 'Thêm sản phẩm thành công.', 201);
+        } catch (ValidationException $e) {
+            ApiResponse::error(
+                $e->getMessage(),
+                $e->getCode() >= 400 ? $e->getCode() : 422,
+                $e->getErrors()
+            );
         } catch (InvalidArgumentException $e) {
             ApiResponse::error($e->getMessage(), 422);
         } catch (RuntimeException $e) {
-            ApiResponse::error($e->getMessage(), 400);
+            ApiResponse::error($e->getMessage(), 500);
         }
     }
 
@@ -75,23 +83,31 @@ class ApiProductController
     {
         $this->ensureAdmin();
 
-        $payload = $_POST;
+        $payload = ApiResponse::input();
         $payload['id'] = $id;
         $this->assertCsrf($payload);
         $page = max(1, (int)($payload['page'] ?? 1));
 
         try {
-            $product = $this->productService->update($id, $payload, $_FILES);
+            $product = $this->productService->update($id, $payload, ApiResponse::files());
             $_SESSION['flash'] = 'Cập nhật thành công!';
 
             ApiResponse::success([
                 'product' => $product,
                 'redirect' => '/?id=' . $product['id'] . '&page=' . $page . '#chitiet'
             ], 'Cập nhật thành công.');
+        } catch (OutOfBoundsException $e) {
+            ApiResponse::error($e->getMessage(), 404);
+        } catch (ValidationException $e) {
+            ApiResponse::error(
+                $e->getMessage(),
+                $e->getCode() >= 400 ? $e->getCode() : 422,
+                $e->getErrors()
+            );
         } catch (InvalidArgumentException $e) {
             ApiResponse::error($e->getMessage(), 422);
         } catch (RuntimeException $e) {
-            ApiResponse::error($e->getMessage(), 400);
+            ApiResponse::error($e->getMessage(), 500);
         }
     }
 
@@ -110,8 +126,10 @@ class ApiProductController
             ApiResponse::success([
                 'redirect' => '/?page=' . $page
             ], 'Xóa sản phẩm thành công.');
-        } catch (RuntimeException $e) {
+        } catch (OutOfBoundsException $e) {
             ApiResponse::error($e->getMessage(), 404);
+        } catch (RuntimeException $e) {
+            ApiResponse::error($e->getMessage(), 500);
         }
     }
 
@@ -136,7 +154,7 @@ class ApiProductController
     private function assertCsrf(array $payload): void
     {
         if (!$this->authService->validateCsrf($payload['csrf_token'] ?? null)) {
-            ApiResponse::error('Invalid CSRF token.', 419);
+            ApiResponse::error('Invalid CSRF token.', 403);
         }
     }
 }

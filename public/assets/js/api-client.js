@@ -1,6 +1,126 @@
 (function () {
     let toastTimer = null;
 
+    function getFieldElement(form, fieldName) {
+        if (!(form instanceof HTMLFormElement) || !fieldName) {
+            return null;
+        }
+
+        const field = form.elements.namedItem(fieldName);
+
+        if (!field) {
+            return null;
+        }
+
+        if (typeof RadioNodeList !== 'undefined' && field instanceof RadioNodeList) {
+            return field.length > 0 ? field[0] : null;
+        }
+
+        return field;
+    }
+
+    function clearFieldError(form, fieldName) {
+        if (!(form instanceof HTMLFormElement) || !fieldName) {
+            return;
+        }
+
+        const errorBox = form.querySelector('[data-field-error="' + fieldName + '"]');
+
+        if (errorBox instanceof HTMLElement) {
+            errorBox.textContent = '';
+            errorBox.hidden = true;
+        }
+
+        const field = getFieldElement(form, fieldName);
+
+        if (field instanceof HTMLElement) {
+            field.classList.remove('input-invalid');
+            field.removeAttribute('aria-invalid');
+        }
+    }
+
+    function clearFormErrors(form) {
+        if (!(form instanceof HTMLFormElement)) {
+            return;
+        }
+
+        form.querySelectorAll('[data-field-error]').forEach((errorBox) => {
+            if (!(errorBox instanceof HTMLElement)) {
+                return;
+            }
+
+            errorBox.textContent = '';
+            errorBox.hidden = true;
+        });
+
+        form.querySelectorAll('.input-invalid').forEach((field) => {
+            if (!(field instanceof HTMLElement)) {
+                return;
+            }
+
+            field.classList.remove('input-invalid');
+            field.removeAttribute('aria-invalid');
+        });
+    }
+
+    function renderFormErrors(form, errors) {
+        if (!(form instanceof HTMLFormElement) || !errors || typeof errors !== 'object') {
+            return false;
+        }
+
+        clearFormErrors(form);
+
+        let hasErrors = false;
+
+        Object.entries(errors).forEach(([fieldName, rawMessage]) => {
+            const message = Array.isArray(rawMessage)
+                ? String(rawMessage[0] || '')
+                : String(rawMessage || '');
+
+            if (!message) {
+                return;
+            }
+
+            const errorBox = form.querySelector('[data-field-error="' + fieldName + '"]');
+            const field = getFieldElement(form, fieldName);
+
+            if (errorBox instanceof HTMLElement) {
+                errorBox.textContent = message;
+                errorBox.hidden = false;
+                hasErrors = true;
+            }
+
+            if (field instanceof HTMLElement) {
+                field.classList.add('input-invalid');
+                field.setAttribute('aria-invalid', 'true');
+                hasErrors = true;
+            }
+        });
+
+        return hasErrors;
+    }
+
+    function clearMessage(target) {
+        if (!(target instanceof HTMLElement)) {
+            return;
+        }
+
+        target.replaceChildren();
+    }
+
+    function renderMessage(target, message, className) {
+        if (!(target instanceof HTMLElement) || !message) {
+            return null;
+        }
+
+        const messageBox = document.createElement('div');
+        messageBox.className = className || 'form-message form-message-error';
+        messageBox.textContent = message;
+        target.replaceChildren(messageBox);
+
+        return messageBox;
+    }
+
     async function request(url, options) {
         const config = options || {};
         const headers = Object.assign(
@@ -83,9 +203,62 @@
         return new URLSearchParams(window.location.search).get(name);
     }
 
+    document.addEventListener('input', (event) => {
+        const target = event.target;
+
+        if (
+            !(target instanceof HTMLInputElement) &&
+            !(target instanceof HTMLSelectElement) &&
+            !(target instanceof HTMLTextAreaElement)
+        ) {
+            return;
+        }
+
+        if (target.form && target.name) {
+            clearFieldError(target.form, target.name);
+        }
+
+        if (target.form) {
+            const formMessage = target.form.querySelector('[data-form-message]');
+
+            if (formMessage instanceof HTMLElement) {
+                clearMessage(formMessage);
+            }
+        }
+    });
+
+    document.addEventListener('change', (event) => {
+        const target = event.target;
+
+        if (
+            !(target instanceof HTMLInputElement) &&
+            !(target instanceof HTMLSelectElement) &&
+            !(target instanceof HTMLTextAreaElement)
+        ) {
+            return;
+        }
+
+        if (target.form && target.name) {
+            clearFieldError(target.form, target.name);
+        }
+
+        if (target.form) {
+            const formMessage = target.form.querySelector('[data-form-message]');
+
+            if (formMessage instanceof HTMLElement) {
+                clearMessage(formMessage);
+            }
+        }
+    });
+
     window.apiClient = {
         request,
         showToast,
-        query
+        query,
+        clearFieldError,
+        clearFormErrors,
+        renderFormErrors,
+        clearMessage,
+        renderMessage
     };
 })();

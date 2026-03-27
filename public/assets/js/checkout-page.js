@@ -5,7 +5,8 @@
     };
 
     const refs = {
-        checkoutContent: document.getElementById('checkoutContent')
+        checkoutContent: document.getElementById('checkoutContent'),
+        checkoutMessage: document.getElementById('checkoutMessage')
     };
 
     function escapeHtml(value) {
@@ -23,6 +24,7 @@
 
     function render() {
         const cart = state.cart || { items: [], total: 0 };
+        window.apiClient.clearMessage(refs.checkoutMessage);
 
         if (!cart.items.length) {
             window.location.href = '/cart';
@@ -44,7 +46,7 @@
                 rows +
             '</table>' +
             '<h3 class="cart-total">Tổng thanh toán: ' + formatMoney(cart.total) + '</h3>' +
-            '<form method="POST" action="/api/checkout" id="checkoutForm">' +
+            '<form method="POST" action="/api/orders" id="checkoutForm">' +
                 '<div class="form-actions form-actions-row">' +
                     '<button type="submit" id="checkoutSubmitBtn">Xác nhận đặt hàng</button>' +
                     '<a href="/cart" class="add-btn">← Quay lại giỏ hàng</a>' +
@@ -53,7 +55,7 @@
     }
 
     async function loadSession() {
-        const response = await window.apiClient.request('/api/auth/session');
+        const response = await window.apiClient.request('/api/session');
 
         if (!response.data.authenticated) {
             window.location.href = '/login';
@@ -91,7 +93,7 @@
 
             window.location.href = response.data.redirect || '/';
         } catch (error) {
-            window.apiClient.showToast(error.message, 'error');
+            window.apiClient.renderMessage(refs.checkoutMessage, error.message);
             submitBtn.disabled = false;
         }
     });
@@ -108,6 +110,9 @@
     }
 
     init().catch((error) => {
-        window.apiClient.showToast(error.message || 'Không thể tải trang thanh toán.', 'error');
+        window.apiClient.renderMessage(
+            refs.checkoutMessage,
+            error.message || 'Không thể tải trang thanh toán.'
+        );
     });
 })();

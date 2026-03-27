@@ -55,7 +55,7 @@ class ApiOrderController
         $payload = ApiResponse::input();
 
         if (!$this->authService->validateCsrf($payload['csrf_token'] ?? null)) {
-            ApiResponse::error('Invalid CSRF token.', 419);
+            ApiResponse::error('Invalid CSRF token.', 403);
         }
 
         try {
@@ -71,8 +71,12 @@ class ApiOrderController
                 'order' => $order,
                 'redirect' => '/'
             ], 'Đặt hàng thành công.', 201);
-        } catch (Exception $e) {
-            ApiResponse::error($e->getMessage(), 400);
+        } catch (OutOfBoundsException $e) {
+            ApiResponse::error($e->getMessage(), 404);
+        } catch (InvalidArgumentException $e) {
+            ApiResponse::error($e->getMessage(), 422);
+        } catch (RuntimeException $e) {
+            ApiResponse::error($e->getMessage(), 500);
         }
     }
 
