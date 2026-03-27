@@ -1,0 +1,16 @@
+FROM mcr.microsoft.com/playwright:v1.49.1-jammy
+
+# Thiết lập thư mục làm việc trong container
+WORKDIR /app
+
+# Copy package.json và package-lock.json trước để tận dụng cache của Docker
+COPY package*.json ./
+
+# Cài đặt các thư viện Node.js cần thiết (bao gồm Playwright)
+RUN npm ci
+
+# Copy toàn bộ mã nguồn của thư mục automation_test vào container
+COPY . .
+
+# Lệnh mặc định khi chạy container này: Chạy kiểm thử tự động
+CMD ["npx", "playwright", "test"]
