@@ -1,0 +1,120 @@
+
+Running 111 tests using 8 workers
+
+[1A[2K[1/111] [chromium] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai password
+[1A[2K[2/111] [chromium] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai cả hai
+[1A[2K[3/111] [chromium] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai username
+[1A[2K[4/111] [chromium] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: username bỏ trống
+[1A[2K[5/111] [chromium] › tests\api-test\LoginAPI.spec.js:12:5 › kiểm tra Đăng nhập API › LoginAPI-TC1 Đăng nhập API thành công
+[1A[2K[6/111] [chromium] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: password bỏ trống
+[1A[2K[7/111] [chromium] › tests\api-test\LogoutAPI.spec.js:5:5 › kiểm tra Logout API › LogoutAPI-TC1 Đăng xuất API thành công
+[1A[2K[8/111] [chromium] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: cả hai bỏ trống
+[1A[2K[9/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên đăng nhập để trống
+[1A[2K[10/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên người dùng để trống
+[1A[2K[11/111] [chromium] › tests\api-test\RegisterAPI.spec.js:13:5 › Kiểm tra Đăng ký API › RegisterAPI-TC1 Đăng ký thành công
+[1A[2K[12/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu để trống
+[1A[2K[13/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu có 5 ký tự.
+[1A[2K[14/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email để trống
+[1A[2K[15/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email sai định dạng
+[1A[2K[16/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Số điện thoại để trống
+[1A[2K[17/111] [chromium] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Địa chỉ để trống
+[1A[2K[18/111] [chromium] › tests\api-test\RegisterAPI.spec.js:32:5 › Kiểm tra Đăng ký API › Register-TC3 Đăng ký tên đăng nhập đã tồn tại
+[1A[2K[19/111] [chromium] › tests\auth-test\login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công
+[1A[2K[20/111] [chromium] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username
+[1A[2K[21/111] [chromium] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password
+[1A[2K[22/111] [chromium] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai
+[1A[2K[23/111] [chromium] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống
+[1A[2K[24/111] [chromium] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống
+[1A[2K[25/111] [chromium] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống
+[1A[2K[26/111] [chromium] › tests\auth-test\logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login
+[1A[2K[27/111] [chromium] › tests\auth-test\register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công
+[1A[2K[28/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống 
+[1A[2K[29/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống 
+[1A[2K[30/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống 
+[1A[2K[31/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự. 
+[1A[2K[32/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống 
+[1A[2K[33/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng 
+[1A[2K[34/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống 
+[1A[2K[35/111] [chromium] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống 
+[1A[2K[36/111] [chromium] › tests\auth-test\register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại 
+[1A[2K[37/111] [chromium] › tests\auth-test\register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login
+[1A[2K[38/111] [firefox] › tests\api-test\LoginAPI.spec.js:12:5 › kiểm tra Đăng nhập API › LoginAPI-TC1 Đăng nhập API thành công
+[1A[2K[39/111] [firefox] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai password
+[1A[2K[40/111] [firefox] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai username
+[1A[2K[41/111] [firefox] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai cả hai
+[1A[2K[42/111] [firefox] › tests\api-test\RegisterAPI.spec.js:13:5 › Kiểm tra Đăng ký API › RegisterAPI-TC1 Đăng ký thành công
+[1A[2K[43/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên người dùng để trống
+[1A[2K[44/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên đăng nhập để trống
+[1A[2K[45/111] [firefox] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: username bỏ trống
+[1A[2K[46/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu có 5 ký tự.
+[1A[2K[47/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu để trống
+[1A[2K[48/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email để trống
+[1A[2K[49/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email sai định dạng
+[1A[2K[50/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Số điện thoại để trống
+[1A[2K[51/111] [firefox] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Địa chỉ để trống
+[1A[2K[52/111] [firefox] › tests\api-test\RegisterAPI.spec.js:32:5 › Kiểm tra Đăng ký API › Register-TC3 Đăng ký tên đăng nhập đã tồn tại
+[1A[2K[53/111] [firefox] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username
+[1A[2K[54/111] [firefox] › tests\auth-test\login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công
+[1A[2K[55/111] [firefox] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password
+[1A[2K[56/111] [firefox] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai
+[1A[2K[57/111] [firefox] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống
+[1A[2K[58/111] [firefox] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: password bỏ trống
+[1A[2K[59/111] [firefox] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống
+[1A[2K[60/111] [firefox] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: cả hai bỏ trống
+[1A[2K[61/111] [firefox] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống
+[1A[2K[62/111] [firefox] › tests\api-test\LogoutAPI.spec.js:5:5 › kiểm tra Logout API › LogoutAPI-TC1 Đăng xuất API thành công
+[1A[2K[63/111] [firefox] › tests\auth-test\logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login
+[1A[2K[64/111] [firefox] › tests\auth-test\register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công
+[1A[2K[65/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống 
+[1A[2K[66/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống 
+[1A[2K[67/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống 
+[1A[2K[68/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự. 
+[1A[2K[69/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống 
+[1A[2K[70/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng 
+[1A[2K[71/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống 
+[1A[2K[72/111] [firefox] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống 
+[1A[2K[73/111] [firefox] › tests\auth-test\register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại 
+[1A[2K[74/111] [firefox] › tests\auth-test\register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login
+[1A[2K[75/111] [webkit] › tests\api-test\LoginAPI.spec.js:12:5 › kiểm tra Đăng nhập API › LoginAPI-TC1 Đăng nhập API thành công
+[1A[2K[76/111] [webkit] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai username
+[1A[2K[77/111] [webkit] › tests\api-test\RegisterAPI.spec.js:13:5 › Kiểm tra Đăng ký API › RegisterAPI-TC1 Đăng ký thành công
+[1A[2K[78/111] [webkit] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai cả hai
+[1A[2K[79/111] [webkit] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: username bỏ trống
+[1A[2K[80/111] [webkit] › tests\api-test\LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai password
+[1A[2K[81/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên người dùng để trống
+[1A[2K[82/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên đăng nhập để trống
+[1A[2K[83/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu để trống
+[1A[2K[84/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu có 5 ký tự.
+[1A[2K[85/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email để trống
+[1A[2K[86/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email sai định dạng
+[1A[2K[87/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Số điện thoại để trống
+[1A[2K[88/111] [webkit] › tests\api-test\RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Địa chỉ để trống
+[1A[2K[89/111] [webkit] › tests\api-test\RegisterAPI.spec.js:32:5 › Kiểm tra Đăng ký API › Register-TC3 Đăng ký tên đăng nhập đã tồn tại
+[1A[2K[90/111] [webkit] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: password bỏ trống
+[1A[2K[91/111] [webkit] › tests\auth-test\login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công
+[1A[2K[92/111] [webkit] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username
+[1A[2K[93/111] [webkit] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password
+[1A[2K[94/111] [webkit] › tests\auth-test\login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai
+[1A[2K[95/111] [webkit] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống
+[1A[2K[96/111] [webkit] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống
+[1A[2K[97/111] [webkit] › tests\api-test\LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: cả hai bỏ trống
+[1A[2K[98/111] [webkit] › tests\auth-test\login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống
+[1A[2K[99/111] [webkit] › tests\api-test\LogoutAPI.spec.js:5:5 › kiểm tra Logout API › LogoutAPI-TC1 Đăng xuất API thành công
+[1A[2K[100/111] [webkit] › tests\auth-test\logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login
+[1A[2K[101/111] [webkit] › tests\auth-test\register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công
+[1A[2K[102/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống 
+[1A[2K[103/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống 
+[1A[2K[104/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống 
+[1A[2K[105/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự. 
+[1A[2K[106/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống 
+[1A[2K[107/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng 
+[1A[2K[108/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống 
+[1A[2K[109/111] [webkit] › tests\auth-test\register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống 
+[1A[2K[110/111] [webkit] › tests\auth-test\register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại 
+[1A[2K[111/111] [webkit] › tests\auth-test\register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login
+[1A[2K  111 passed (35.5s)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report[39m
+[36m[39m
