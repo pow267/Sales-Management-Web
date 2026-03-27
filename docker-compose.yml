@@ -18,7 +18,9 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - milk_network
+      milk_network:
+        aliases:
+          - milk-backend
     restart: unless-stopped
 
   frontend:
@@ -63,7 +65,7 @@ services:
     profiles:
       - test
     environment:
-      - PLAYWRIGHT_TEST_BASE_URL=http://app:80
+      - PLAYWRIGHT_TEST_BASE_URL=http://milk-backend:80
     volumes:
       - ./automation_test/playwright-report:/app/playwright-report
     depends_on:

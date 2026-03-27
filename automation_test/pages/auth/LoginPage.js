@@ -1,5 +1,5 @@
 class LoginPage {
-    constructor(page){
+    constructor(page) {
         this.page = page;
 
         this.loginButton = page.locator('#loginSubmitBtn');
@@ -9,11 +9,11 @@ class LoginPage {
         this.errorMessage = page.locator('.form-message-error');
     }
 
-    async goto(){
+    async goto() {
         await this.page.goto('/login');
     }
 
-    async login(username, password){
+    async login(username, password) {
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.click();
