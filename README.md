@@ -19,7 +19,9 @@ npm install
 
 ### 4. Run test
 - cd "automation"
+- Thêm seed: npm run seed
 - npx playwright test --ui
+- Reset database: npm run reset
 
 ## Scope kiểm thử
 - E2E testing cho các luồng CRUD
