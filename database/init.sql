@@ -102,15 +102,6 @@ CREATE INDEX idx_order_items_product ON order_items(product_id);
 -- INSERT DATA
 -- ==================================================
 
-INSERT INTO users (full_name, username, password, email, role)
-VALUES (
-    'Quản trị viên',
-    'admin',
-    '$2y$12$MdHZlJErKY6wxUSTJtr3QO0nZiKhrUaXaEqVLunwZhf2yYV8vqrCm',
-    'admin@mail.com',
-    'admin'
-);
-
 INSERT INTO hang_sua VALUES
 ('AB','Abbott','Công ty nhập khẩu Việt Nam','8741258','abbott@ab.com'),
 ('DL','Dutch Lady','Khu công nghiệp Biên Hòa - Đồng Nai','7826451','dutchlady@dl.com'),
@@ -119,21 +110,3 @@ INSERT INTO hang_sua VALUES
 ('MJ','Mead Johnson','Công ty nhập khẩu Việt Nam','8741258','meadjohn@mj.com'),
 ('NTF','Nutifood','Khu công nghiệp Sóng Thần Bình Dương','7895632','nutifood@ntf.com'),
 ('VNM','Vinamilk','123 Nguyễn Du - Quận 1 - TP.HCM','8794561','vinamilk@vnm.com');
-
-INSERT INTO products (
-    ten_sua,
-    ma_hang_sua,
-    loai_sua,
-    trong_luong,
-    don_gia,
-    tpdd,
-    loi_ich
-) VALUES (
-    'Vinamilk 100% Sữa Tươi Tiệt Trùng Có Đường 180ml',
-    'VNM',
-    'Sữa tươi tiệt trùng có đường',
-    180,
-    7500,
-    'xxx',
-    'xxx'
-);
