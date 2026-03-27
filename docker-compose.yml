@@ -62,10 +62,14 @@ services:
     build:
       context: ./automation_test
       dockerfile: Dockerfile.test
-    profiles:
-      - test
     environment:
       - PLAYWRIGHT_TEST_BASE_URL=http://milk-backend:80
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=123456
+      - DB_NAME=ql_ban_sua
+    command: sh -c "npm run reset && npm run seed && npx playwright test"
     volumes:
       - ./automation_test/playwright-report:/app/playwright-report
     depends_on:

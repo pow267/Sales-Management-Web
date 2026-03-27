@@ -62,7 +62,7 @@ jobs:
       - name: Automation testing - Playwright
         run: docker compose --profile test up --exit-code-from playwright
 
-      - name: Lưu trữ báo cáo Playwright
+      - name: Lưu Report - Playwright
         if: always()
         uses: actions/upload-artifact@v4
         with:
