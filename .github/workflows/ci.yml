@@ -33,18 +33,34 @@ jobs:
       - name: Khởi động hệ thống (App, DB, Frontend)
         run: docker compose up -d app db frontend
 
+      # ===== Đợi App sẵn sàng (Healthcheck) =====
+      - name: Kiểm tra ứng dụng đã sẵn sàng
+        run: |
+          for i in {1..20}; do
+            # Chúng ta dùng curl gọi port 8080 đã map ra localhost của Github Runner
+            STATUS=$(curl -o /dev/null -s -w "%{http_code}" http://localhost:8080/ || true)
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "302" ]; then
+              echo "Hoàn tất: Ứng dụng đã sẵn sàng sau $i lần thử"
+              exit 0
+            fi
+            echo "Đang chờ ứng dụng... (HTTP $STATUS)"
+            sleep 3
+          done
+          echo "Lỗi: Ứng dụng không phản hồi (Timeout)"
+          docker ps -a
+          docker logs $(docker ps -qf "name=app")
+          exit 1
+
       # ===== Khởi tạo Database (Reset & Seed) =====
       - name: Thiết lập cơ sở dữ liệu
         run: |
-          # Đợi hệ thống khởi động hoàn chỉnh
-          sleep 10
           npm ci --prefix automation_test
           npm run reset --prefix automation_test
           npm run seed --prefix automation_test
 
-      # ===== Chạy kiểm thử tự động Playwright bằng Docker Compose =====
+      # ===== Chạy kiểm thử tự động Playwright (Dùng UP thay vì RUN) =====
       - name: Chạy kiểm thử tự động Playwright
-        run: docker compose --profile test run --rm playwright
+        run: docker compose --profile test up --exit-code-from playwright
 
       - name: Lưu trữ báo cáo Playwright
         if: always()
@@ -53,6 +69,13 @@ jobs:
           name: playwright-report
           path: automation_test/playwright-report/
           retention-days: 30
+
+      # ===== Debug nếu thất bại =====
+      - name: Hiển thị Log nếu lỗi
+        if: failure()
+        run: |
+          docker compose logs app
+          docker compose logs playwright
 
       # ===== Dọn dẹp container =====
       - name: Dọn dẹp hệ thống

@@ -69,6 +69,8 @@ services:
     depends_on:
       app:
         condition: service_healthy
+      db:
+        condition: service_healthy
       frontend:
         condition: service_started
     networks:
