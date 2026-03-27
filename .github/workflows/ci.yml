@@ -55,6 +55,34 @@ jobs:
       - name: Hiển thị danh sách container
         run: docker ps -a
 
+      # ===== Cài đặt Node.js và Playwright Testing =====
+      - name: Cài đặt Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: automation_test/package-lock.json
+
+      - name: Cài đặt các thư viện module NPM
+        working-directory: automation_test
+        run: npm ci
+
+      - name: Cài đặt các trình duyệt Playwright
+        working-directory: automation_test
+        run: npx playwright install --with-deps
+
+      - name: Chạy kiểm thử tự động Playwright
+        working-directory: automation_test
+        run: npx playwright test
+
+      - name: Lưu trữ báo cáo Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: automation_test/playwright-report/
+          retention-days: 30
+
       # ===== Dọn dẹp container =====
       - name: Dọn dẹp container kiểm thử
         if: always()
