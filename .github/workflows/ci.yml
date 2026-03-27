@@ -29,44 +29,22 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # ===== Chạy container kiểm thử =====
-      - name: Chạy container kiểm thử
+      # ===== Chạy toàn bộ hệ thống bằng Docker Compose =====
+      - name: Khởi động hệ thống (App, DB, Frontend)
+        run: docker compose up -d app db frontend
+
+      # ===== Khởi tạo Database (Reset & Seed) =====
+      - name: Thiết lập cơ sở dữ liệu
         run: |
-          docker run -d -p 8080:80 --name test_app milk_app:test
+          # Đợi hệ thống khởi động hoàn chỉnh
+          sleep 10
+          npm ci --prefix automation_test
+          npm run reset --prefix automation_test
+          npm run seed --prefix automation_test
 
-      # ===== Chờ ứng dụng khởi động =====
-      - name: Kiểm tra ứng dụng đã sẵn sàng
-        run: |
-          for i in {1..20}; do
-            STATUS=$(curl -o /dev/null -s -w "%{http_code}" http://localhost:8080 || true)
-            if [ "$STATUS" = "200" ]; then
-              echo "Ứng dụng đã sẵn sàng"
-              exit 0
-            fi
-            echo "Đang chờ ứng dụng... lần $i"
-            sleep 3
-          done
-
-          echo "Ứng dụng không khởi động được"
-          docker logs test_app
-          exit 1
-
-      # ===== Hiển thị container (debug) =====
-      - name: Hiển thị danh sách container
-        run: docker ps -a
-
-      # ===== Build Docker image cho Automation Test =====
-      - name: Build image test Playwright
-        working-directory: automation_test
-        run: docker build -f Dockerfile.test -t test_playwright:latest .
-
-      # ===== Chạy Test Container (Playwright) =====
-      - name: Chạy kiểm thử tự động Playwright bằng Docker
-        run: |
-          docker run --rm \
-            --network container:test_app \
-            -v ${{ github.workspace }}/automation_test/playwright-report:/app/playwright-report \
-            test_playwright:latest
+      # ===== Chạy kiểm thử tự động Playwright bằng Docker Compose =====
+      - name: Chạy kiểm thử tự động Playwright
+        run: docker compose --profile test run --rm playwright
 
       - name: Lưu trữ báo cáo Playwright
         if: always()
@@ -77,6 +55,6 @@ jobs:
           retention-days: 30
 
       # ===== Dọn dẹp container =====
-      - name: Dọn dẹp container kiểm thử
+      - name: Dọn dẹp hệ thống
         if: always()
-        run: docker rm -f test_app || true
+        run: docker compose down -v
