@@ -12,6 +12,11 @@ services:
         condition: service_healthy
     volumes:
       - .:/var/www/html:cached
+    healthcheck:
+      test: ["CMD", "curl", "-sSf", "http://localhost/"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - milk_network
     restart: unless-stopped
@@ -50,6 +55,24 @@ services:
     networks:
       - milk_network
     restart: unless-stopped
+
+  playwright:
+    build:
+      context: ./automation_test
+      dockerfile: Dockerfile.test
+    profiles:
+      - test
+    environment:
+      - PLAYWRIGHT_TEST_BASE_URL=http://app:80
+    volumes:
+      - ./automation_test/playwright-report:/app/playwright-report
+    depends_on:
+      app:
+        condition: service_healthy
+      frontend:
+        condition: service_started
+    networks:
+      - milk_network
 
 volumes:
   db_data:

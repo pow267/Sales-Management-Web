@@ -1,0 +1,646 @@
+ Container sales-management-web-frontend-1 Running 
+ Container sales-management-web-db-1 Running 
+ Container sales-management-web-app-1 Running 
+ Container sales-management-web-db-1 Waiting 
+ Container sales-management-web-db-1 Healthy 
+ Container sales-management-web-playwright-run-175771e0eced Creating 
+ Container sales-management-web-playwright-run-175771e0eced Created 
+
+Running 111 tests using 8 workers
+
+[1A[2K[1/111] [chromium] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai password
+[1A[2K[2/111] [chromium] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: username bỏ trống
+[1A[2K[3/111] [chromium] › tests/api-test/LogoutAPI.spec.js:5:5 › kiểm tra Logout API › LogoutAPI-TC1 Đăng xuất API thành công
+[1A[2K[4/111] [chromium] › tests/api-test/LoginAPI.spec.js:12:5 › kiểm tra Đăng nhập API › LoginAPI-TC1 Đăng nhập API thành công
+[1A[2K[5/111] [chromium] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: password bỏ trống
+[1A[2K[6/111] [chromium] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai cả hai
+[1A[2K[7/111] [chromium] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai username
+[1A[2K[8/111] [chromium] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: cả hai bỏ trống
+[1A[2K[9/111] [chromium] › tests/api-test/RegisterAPI.spec.js:13:5 › Kiểm tra Đăng ký API › RegisterAPI-TC1 Đăng ký thành công
+[1A[2K[10/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên người dùng để trống
+[1A[2K[11/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên đăng nhập để trống
+[1A[2K[12/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu để trống
+[1A[2K[13/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu có 5 ký tự.
+[1A[2K[14/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email để trống
+[1A[2K[15/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email sai định dạng
+[1A[2K[16/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Địa chỉ để trống
+[1A[2K[17/111] [chromium] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Số điện thoại để trống
+[1A[2K[18/111] [chromium] › tests/api-test/RegisterAPI.spec.js:32:5 › Kiểm tra Đăng ký API › Register-TC3 Đăng ký tên đăng nhập đã tồn tại
+[1A[2K[19/111] [chromium] › tests/auth-test/login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công
+[1A[2K[20/111] [chromium] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username
+[1A[2K[21/111] [chromium] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai
+[1A[2K[22/111] [chromium] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password
+[1A[2K[23/111] [chromium] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống
+[1A[2K[24/111] [chromium] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống
+[1A[2K[25/111] [chromium] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống
+[1A[2K[26/111] [chromium] › tests/auth-test/logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login
+[1A[2K[27/111] [chromium] › tests/auth-test/register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công
+[1A[2K[28/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống 
+[1A[2K[29/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống 
+[1A[2K[30/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống 
+[1A[2K[31/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự. 
+[1A[2K[32/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống 
+[1A[2K[33/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng 
+[1A[2K[34/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống 
+[1A[2K[35/111] [chromium] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống 
+[1A[2K[36/111] [chromium] › tests/auth-test/register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại 
+[1A[2K[37/111] [chromium] › tests/auth-test/register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login
+[1A[2K[38/111] [firefox] › tests/api-test/LoginAPI.spec.js:12:5 › kiểm tra Đăng nhập API › LoginAPI-TC1 Đăng nhập API thành công
+[1A[2K[39/111] [firefox] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai username
+[1A[2K[40/111] [firefox] › tests/api-test/RegisterAPI.spec.js:13:5 › Kiểm tra Đăng ký API › RegisterAPI-TC1 Đăng ký thành công
+[1A[2K[41/111] [firefox] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai password
+[1A[2K[42/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên người dùng để trống
+[1A[2K[43/111] [firefox] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai cả hai
+[1A[2K[44/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên đăng nhập để trống
+[1A[2K[45/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu để trống
+[1A[2K[46/111] [firefox] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: username bỏ trống
+[1A[2K[47/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu có 5 ký tự.
+[1A[2K[48/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email để trống
+[1A[2K[49/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email sai định dạng
+[1A[2K[50/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Số điện thoại để trống
+[1A[2K[51/111] [firefox] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Địa chỉ để trống
+[1A[2K[52/111] [firefox] › tests/auth-test/login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công
+[1A[2K[53/111] [firefox] › tests/api-test/RegisterAPI.spec.js:32:5 › Kiểm tra Đăng ký API › Register-TC3 Đăng ký tên đăng nhập đã tồn tại
+[1A[2K[54/111] [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username
+[1A[2K[55/111] [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password
+[1A[2K[56/111] [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai
+[1A[2K[57/111] [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống
+[1A[2K[58/111] [firefox] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: password bỏ trống
+[1A[2K[59/111] [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống
+[1A[2K[60/111] [firefox] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: cả hai bỏ trống
+[1A[2K[61/111] [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống
+[1A[2K[62/111] [firefox] › tests/api-test/LogoutAPI.spec.js:5:5 › kiểm tra Logout API › LogoutAPI-TC1 Đăng xuất API thành công
+[1A[2K[63/111] [firefox] › tests/auth-test/logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login
+[1A[2K  1) [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/login.spec.js:11:25
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-46ef8--negative-case-sai-username-firefox/error-context.md
+
+
+[1A[2K  2) [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/login.spec.js:11:25
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-63bb8-alid-case-username-bỏ-trống-firefox/error-context.md
+
+
+[1A[2K  3) [firefox] › tests/auth-test/logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/logout.spec.js:11:25
+
+    Error Context: test-results/auth-test-logout-Kiểm-tra--da457-ấn-logout-để-ra-ngoài-Login-firefox/error-context.md
+
+
+[1A[2K  4) [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/login.spec.js:11:25
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-d157f-nvalid-case-cả-hai-bỏ-trống-firefox/error-context.md
+
+
+[1A[2K[64/111] [firefox] › tests/auth-test/register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công
+[1A[2K  5) [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/login.spec.js:11:25
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-14310-alid-case-password-bỏ-trống-firefox/error-context.md
+
+
+[1A[2K[65/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống 
+[1A[2K[66/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống 
+[1A[2K  6) [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/login.spec.js:11:25
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-1b642-ai-negative-case-sai-cả-hai-firefox/error-context.md
+
+
+[1A[2K[67/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống 
+[1A[2K  7) [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/login.spec.js:11:25
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-32a5f--negative-case-sai-password-firefox/error-context.md
+
+
+[1A[2K[68/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự. 
+[1A[2K  8) [firefox] › tests/auth-test/login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/LoginPage.js:13
+
+      11 |
+      12 |     async goto(){
+    > 13 |         await this.page.goto('/login');
+         |                         ^
+      14 |     }
+      15 |
+      16 |     async login(username, password){
+        at LoginPage.goto (/app/pages/auth/LoginPage.js:13:25)
+        at /app/tests/auth-test/login.spec.js:11:25
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-0ff1b-h-TC01-Đăng-nhập-thành-công-firefox/error-context.md
+
+
+[1A[2K[69/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống 
+[1A[2K[70/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng 
+[1A[2K[71/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống 
+[1A[2K  9) [firefox] › tests/auth-test/register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-889d3-ster-TC1-Đăng-ký-thành-công-firefox/error-context.md
+
+
+[1A[2K  10) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-88712-id-Tên-người-dùng-để-trống--firefox/error-context.md
+
+
+[1A[2K  11) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-431ca-lid-Tên-đăng-nhập-để-trống--firefox/error-context.md
+
+
+[1A[2K  12) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-64c8a--invalid-Mật-khẩu-để-trống--firefox/error-context.md
+
+
+[1A[2K[72/111] [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống 
+[1A[2K  13) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự.  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-6c2f7-nvalid-Mật-khẩu-có-5-ký-tự--firefox/error-context.md
+
+
+[1A[2K[73/111] [firefox] › tests/auth-test/register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại 
+[1A[2K[74/111] [firefox] › tests/auth-test/register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login
+[1A[2K  14) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-04e74-put-invalid-Email-để-trống--firefox/error-context.md
+
+
+[1A[2K[75/111] [webkit] › tests/api-test/LoginAPI.spec.js:12:5 › kiểm tra Đăng nhập API › LoginAPI-TC1 Đăng nhập API thành công
+[1A[2K  15) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-ab8d2-nvalid-Email-sai-định-dạng--firefox/error-context.md
+
+
+[1A[2K[76/111] [webkit] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: username bỏ trống
+[1A[2K[77/111] [webkit] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: password bỏ trống
+[1A[2K[78/111] [webkit] › tests/api-test/LoginAPI.spec.js:33:9 › kiểm tra Đăng nhập API › LoginAPI-TC3 Bỏ trống input các case: cả hai bỏ trống
+[1A[2K[79/111] [webkit] › tests/api-test/LogoutAPI.spec.js:5:5 › kiểm tra Logout API › LogoutAPI-TC1 Đăng xuất API thành công
+[1A[2K[80/111] [webkit] › tests/api-test/RegisterAPI.spec.js:13:5 › Kiểm tra Đăng ký API › RegisterAPI-TC1 Đăng ký thành công
+[1A[2K[81/111] [webkit] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai username
+[1A[2K[82/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên người dùng để trống
+[1A[2K[83/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Tên đăng nhập để trống
+[1A[2K[84/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu để trống
+[1A[2K[85/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Mật khẩu có 5 ký tự.
+[1A[2K  16) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-4ca72-lid-Số-điện-thoại-để-trống--firefox/error-context.md
+
+
+[1A[2K[86/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email sai định dạng
+[1A[2K[87/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Số điện thoại để trống
+[1A[2K[88/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Địa chỉ để trống
+[1A[2K[89/111] [webkit] › tests/api-test/RegisterAPI.spec.js:32:5 › Kiểm tra Đăng ký API › Register-TC3 Đăng ký tên đăng nhập đã tồn tại
+[1A[2K[90/111] [webkit] › tests/auth-test/login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công
+[1A[2K[91/111] [webkit] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username
+[1A[2K[92/111] [webkit] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai password
+[1A[2K[93/111] [webkit] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password
+[1A[2K[94/111] [webkit] › tests/api-test/LoginAPI.spec.js:24:9 › kiểm tra Đăng nhập API › LoginAPI-TC2 Nhập sai các case: sai cả hai
+[1A[2K[95/111] [webkit] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai
+[1A[2K[96/111] [webkit] › tests/api-test/RegisterAPI.spec.js:23:9 › Kiểm tra Đăng ký API › RegisterAPI-TC2 Đăng ký thất bại với các case: Email để trống
+[1A[2K  17) [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-d4fcd-t-invalid-Địa-chỉ-để-trống--firefox/error-context.md
+
+
+[1A[2K[97/111] [webkit] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống
+[1A[2K  18) [firefox] › tests/auth-test/register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại  
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-47ba0-ý-Tên-đăng-nhập-đã-tồn-tại--firefox/error-context.md
+
+
+[1A[2K  19) [firefox] › tests/auth-test/register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login 
+
+    Error: page.goto: NS_ERROR_CONNECTION_REFUSED
+    Call log:
+    [2m  - navigating to "http://app/login", waiting until "load"[22m
+
+
+       at ../pages/auth/RegisterPage.js:19
+
+      17 |
+      18 |     async goto(){
+    > 19 |         await this.page.goto('/login');
+         |                         ^
+      20 |         await this.registerButton.click();
+      21 |     }
+      22 |
+        at RegisterPage.goto (/app/pages/auth/RegisterPage.js:19:25)
+        at /app/tests/auth-test/register.spec.js:12:28
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-c432c-ấn-nút-quay-lại-trang-Login-firefox/error-context.md
+
+
+[1A[2K[98/111] [webkit] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống
+[1A[2K[99/111] [webkit] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống
+[1A[2K[100/111] [webkit] › tests/auth-test/logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login
+[1A[2K[101/111] [webkit] › tests/auth-test/register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công
+[1A[2K[102/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống 
+[1A[2K[103/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống 
+[1A[2K[104/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống 
+[1A[2K[105/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự. 
+[1A[2K[106/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống 
+[1A[2K[107/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng 
+[1A[2K[108/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống 
+[1A[2K[109/111] [webkit] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống 
+[1A[2K  20) [webkit] › tests/auth-test/login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('#logoutForm')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('#logoutForm')[22m
+    [2m    - waiting for" http://app/login" navigation to finish...[22m
+    [2m    - navigated to "http://app/login"[22m
+
+
+      14 |     test('Auth-TC01 Đăng nhập thành công', async () => {
+      15 |         await loginPage.login('admin','123');
+    > 16 |         await expect(loginPage.loginSuccess).toBeVisible();
+         |                                              ^
+      17 |     });
+      18 |
+      19 |     for(const data of negativeData()){
+        at /app/tests/auth-test/login.spec.js:16:46
+
+    Error Context: test-results/auth-test-login-Kiểm-tra-c-0ff1b-h-TC01-Đăng-nhập-thành-công-webkit/error-context.md
+
+
+[1A[2K[110/111] [webkit] › tests/auth-test/register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login
+[1A[2K  21) [webkit] › tests/auth-test/logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoBeVisible[2m([22m[2m)[22m failed
+
+    Locator: locator('#logoutForm')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toBeVisible" with timeout 5000ms[22m
+    [2m  - waiting for locator('#logoutForm')[22m
+    [2m    - waiting for" http://app/" navigation to finish...[22m
+    [2m    - navigated to "http://app/login"[22m
+
+
+      11 |         await loginPage.goto();
+      12 |         await loginPage.login('admin','123');
+    > 13 |         await expect(loginPage.loginSuccess).toBeVisible();
+         |                                              ^
+      14 |
+      15 |         await logoutPage.logout();
+      16 |         await expect(page).toHaveURL('/login');
+        at /app/tests/auth-test/logout.spec.js:13:46
+
+    Error Context: test-results/auth-test-logout-Kiểm-tra--da457-ấn-logout-để-ra-ngoài-Login-webkit/error-context.md
+
+
+[1A[2K[111/111] [webkit] › tests/auth-test/register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại 
+[1A[2K  22) [webkit] › tests/auth-test/register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công 
+
+    Error: [2mexpect([22m[31mlocator[39m[2m).[22mtoHaveText[2m([22m[32mexpected[39m[2m)[22m failed
+
+    Locator: locator('.form-message')
+    Expected: [32m"Đăng ký thành công. Vui lòng đăng nhập."[39m
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+    [2m  - Expect "toHaveText" with timeout 5000ms[22m
+    [2m  - waiting for locator('.form-message')[22m
+
+
+      17 |         await registerPage.fill(data);
+      18 |         await registerPage.submit();
+    > 19 |         await expect(registerPage.successMessage).toHaveText('Đăng ký thành công. Vui lòng đăng nhập.');
+         |                                                   ^
+      20 |     });
+      21 |
+      22 |     InvalidRegister().forEach( ({ name, field, data, expectedError}) => {
+        at /app/tests/auth-test/register.spec.js:19:51
+
+    Error Context: test-results/auth-test-register-Kiểm-tr-889d3-ster-TC1-Đăng-ký-thành-công-webkit/error-context.md
+
+
+[1A[2K  22 failed
+    [firefox] › tests/auth-test/login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công 
+    [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai username 
+    [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai password 
+    [firefox] › tests/auth-test/login.spec.js:20:9 › Kiểm tra chức năng Login › Auth-TC02 Nhập sai negative case: sai cả hai 
+    [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: username bỏ trống 
+    [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: password bỏ trống 
+    [firefox] › tests/auth-test/login.spec.js:27:9 › Kiểm tra chức năng Login › Auth-TC03 nhập giá trị invalid case: cả hai bỏ trống 
+    [firefox] › tests/auth-test/logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login 
+    [firefox] › tests/auth-test/register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công 
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên người dùng để trống  
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Tên đăng nhập để trống  
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu để trống  
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Mật khẩu có 5 ký tự.  
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email để trống  
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Email sai định dạng  
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Số điện thoại để trống  
+    [firefox] › tests/auth-test/register.spec.js:23:9 › Kiểm tra chức năng đăng ký › Register-TC2 Input invalid: Địa chỉ để trống  
+    [firefox] › tests/auth-test/register.spec.js:31:9 › Kiểm tra chức năng đăng ký › Register-TC3 Tên đăng nhập đã tồn tại khi đăng ký: Tên đăng nhập đã tồn tại  
+    [firefox] › tests/auth-test/register.spec.js:38:5 › Kiểm tra chức năng đăng ký › Register-TC4 Nhấn nút quay lại trang Login 
+    [webkit] › tests/auth-test/login.spec.js:14:5 › Kiểm tra chức năng Login › Auth-TC01 Đăng nhập thành công 
+    [webkit] › tests/auth-test/logout.spec.js:7:5 › Kiểm tra chức năng Logout › Logout-TC01 Nhấn logout để ra ngoài Login 
+    [webkit] › tests/auth-test/register.spec.js:15:5 › Kiểm tra chức năng đăng ký › Register-TC1 Đăng ký thành công 
+  89 passed (42.4s)
+
