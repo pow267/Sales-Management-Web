@@ -51,15 +51,15 @@ jobs:
           docker logs $(docker ps -qf "name=app")
           exit 1
 
-      # ===== Khởi tạo Database (Reset & Seed) =====
+      # ===== Khởi tạo Database =====
       - name: Thiết lập cơ sở dữ liệu
         run: |
           npm ci --prefix automation_test
           npm run reset --prefix automation_test
           npm run seed --prefix automation_test
 
-      # ===== Chạy kiểm thử tự động Playwright (Dùng UP thay vì RUN) =====
-      - name: Chạy kiểm thử tự động Playwright
+      # ===== Chạy kiểm thử tự động Playwright =====
+      - name: Automation testing - Playwright
         run: docker compose --profile test up --exit-code-from playwright
 
       - name: Lưu trữ báo cáo Playwright
