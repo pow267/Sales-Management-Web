@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../helpers/ApiResponse.php';
+require_once __DIR__ . '/../helpers/ValidationException.php';
 require_once __DIR__ . '/../services/AuthService.php';
 require_once __DIR__ . '/../services/CartService.php';
 
@@ -40,8 +41,18 @@ class ApiCartController
                 'cart' => $summary,
                 'redirect' => '/cart'
             ], 'Đã thêm vào giỏ hàng.');
+        } catch (OutOfBoundsException $e) {
+            ApiResponse::error($e->getMessage(), 404);
+        } catch (ValidationException $e) {
+            ApiResponse::error(
+                $e->getMessage(),
+                $e->getCode() >= 400 ? $e->getCode() : 422,
+                $e->getErrors()
+            );
+        } catch (InvalidArgumentException $e) {
+            ApiResponse::error($e->getMessage(), 422);
         } catch (RuntimeException $e) {
-            ApiResponse::error($e->getMessage(), 400);
+            ApiResponse::error($e->getMessage(), 500);
         }
     }
 
@@ -52,13 +63,17 @@ class ApiCartController
         $payload = ApiResponse::input();
         $this->assertCsrf($payload);
 
-        $summary = $this->cartService->remove($productId);
-        $_SESSION['flash'] = 'Đã xóa sản phẩm khỏi giỏ';
+        try {
+            $summary = $this->cartService->remove($productId);
+            $_SESSION['flash'] = 'Đã xóa sản phẩm khỏi giỏ';
 
-        ApiResponse::success([
-            'cart' => $summary,
-            'redirect' => '/cart'
-        ], 'Đã xóa sản phẩm khỏi giỏ.');
+            ApiResponse::success([
+                'cart' => $summary,
+                'redirect' => '/cart'
+            ], 'Đã xóa sản phẩm khỏi giỏ.');
+        } catch (OutOfBoundsException $e) {
+            ApiResponse::error($e->getMessage(), 404);
+        }
     }
 
     private function ensureAuthenticated(): void
@@ -71,7 +86,7 @@ class ApiCartController
     private function assertCsrf(array $payload): void
     {
         if (!$this->authService->validateCsrf($payload['csrf_token'] ?? null)) {
-            ApiResponse::error('Invalid CSRF token.', 419);
+            ApiResponse::error('Invalid CSRF token.', 403);
         }
     }
 }

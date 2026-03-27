@@ -17,7 +17,7 @@ class OrderService
     public function createOrder(int $userId, array $cart): array
     {
         if (empty($cart)) {
-            throw new Exception("Giỏ hàng trống.");
+            throw new InvalidArgumentException("Giỏ hàng trống.");
         }
 
         $this->orderModel->begin();
@@ -32,7 +32,7 @@ class OrderService
                 $product = $this->productModel->getById($productId);
 
                 if (!$product) {
-                    throw new Exception("Sản phẩm không tồn tại.");
+                    throw new OutOfBoundsException("Sản phẩm không tồn tại.");
                 }
 
                 $price = (int)$product['don_gia'];
@@ -68,7 +68,7 @@ class OrderService
                 'items' => $itemsData
             ];
 
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $this->orderModel->rollback();
             throw $e;
         }

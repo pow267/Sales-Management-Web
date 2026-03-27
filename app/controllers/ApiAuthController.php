@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../helpers/ApiResponse.php';
+require_once __DIR__ . '/../helpers/ValidationException.php';
 require_once __DIR__ . '/../services/AuthService.php';
 
 class ApiAuthController
@@ -17,7 +18,7 @@ class ApiAuthController
         ApiResponse::success($this->service->getSessionData());
     }
 
-    public function login(): void
+    public function storeSession(): void
     {
         $data = ApiResponse::input();
 
@@ -32,33 +33,25 @@ class ApiAuthController
                 'csrf_token' => $this->service->ensureCsrfToken(),
                 'redirect' => '/'
             ], 'Đăng nhập thành công.');
+        } catch (ValidationException $e) {
+            ApiResponse::error(
+                $e->getMessage(),
+                $e->getCode() >= 400 ? $e->getCode() : 422,
+                $e->getErrors()
+            );
+        } catch (InvalidArgumentException $e) {
+            ApiResponse::error($e->getMessage(), 422);
         } catch (RuntimeException $e) {
             ApiResponse::error($e->getMessage(), 401);
         }
     }
 
-    public function register(): void
-    {
-        $data = ApiResponse::input();
-
-        try {
-            $this->service->register($data);
-            $_SESSION['flash'] = 'Đăng ký thành công. Vui lòng đăng nhập.';
-
-            ApiResponse::success([
-                'redirect' => '/login'
-            ], 'Đăng ký thành công.', 201);
-        } catch (RuntimeException $e) {
-            ApiResponse::error($e->getMessage(), 422);
-        }
-    }
-
-    public function logout(): void
+    public function destroySession(): void
     {
         $data = ApiResponse::input();
 
         if (!empty($_SESSION['user']) && !$this->service->validateCsrf($data['csrf_token'] ?? null)) {
-            ApiResponse::error('Invalid CSRF token.', 419);
+            ApiResponse::error('Invalid CSRF token.', 403);
         }
 
         $this->service->logout();

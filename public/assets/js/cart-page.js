@@ -5,7 +5,8 @@
     };
 
     const refs = {
-        cartContent: document.getElementById('cartContent')
+        cartContent: document.getElementById('cartContent'),
+        cartMessage: document.getElementById('cartMessage')
     };
 
     function escapeHtml(value) {
@@ -23,6 +24,7 @@
 
     function render() {
         const cart = state.cart || { items: [], total: 0 };
+        window.apiClient.clearMessage(refs.cartMessage);
 
         if (!cart.items.length) {
             refs.cartContent.innerHTML = '<p class="text-center text-gray-500 py-10">Giỏ hàng đang trống</p>';
@@ -57,7 +59,7 @@
     }
 
     async function loadSession() {
-        const response = await window.apiClient.request('/api/auth/session');
+        const response = await window.apiClient.request('/api/session');
 
         if (!response.data.authenticated) {
             window.location.href = '/login';
@@ -97,7 +99,7 @@
             await loadCart();
             render();
         } catch (error) {
-            window.apiClient.showToast(error.message, 'error');
+            window.apiClient.renderMessage(refs.cartMessage, error.message);
         }
     });
 
@@ -113,6 +115,9 @@
     }
 
     init().catch((error) => {
-        window.apiClient.showToast(error.message || 'Không thể tải giỏ hàng.', 'error');
+        window.apiClient.renderMessage(
+            refs.cartMessage,
+            error.message || 'Không thể tải giỏ hàng.'
+        );
     });
 })();

@@ -25,6 +25,8 @@ THANH TOÁN
     </script>
 <?php endif; ?>
 
+<div id="checkoutMessage"></div>
+
 <div id="checkoutContent">
     <p class="text-center text-gray-500 py-10">Đang tải thông tin thanh toán...</p>
 </div>
