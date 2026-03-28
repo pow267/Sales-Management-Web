@@ -34,3 +34,4 @@ npm install
 - Page Object Model (POM)
 - Multi-browser testing
 - SQL data verification
+
