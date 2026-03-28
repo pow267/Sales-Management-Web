@@ -12,7 +12,7 @@ test.describe('Kiểm tra chức năng Xóa sản phẩm', () => {
         addPage = new AddPage(adminPage);
         testData = productData();
     });
-    test('Delete-TC1 Thêm một sản phẩm mới và xóa nó đi', async ({ adminPage }) => {
+    test('Delete-TC1 Thêm một sản phẩm mới và xóa nó đi', async () => {
         await viewPage.clickAddButton();
         await addPage.fillForm(testData);
         await addPage.waitForSave();
