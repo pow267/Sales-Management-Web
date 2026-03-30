@@ -7,8 +7,8 @@ const { NegativeRegister } = require('../../test-data/auth/NegativeRegister');
 test.describe('Kiểm tra chức năng đăng ký', () => {
 
     let registerPage;
-    test.beforeEach( async ({page}) => {
-        registerPage = new RegisterPage(page);
+    test.beforeEach(async ({ page }) => {
+        registerPage = new RegisterPage(page, test);
         await registerPage.goto();
     });
 

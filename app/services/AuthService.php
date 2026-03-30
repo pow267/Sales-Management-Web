@@ -108,12 +108,12 @@ class AuthService
             }
         }
 
-        if (
+        /* if (
             $payload['email'] !== ''
             && !filter_var($payload['email'], FILTER_VALIDATE_EMAIL)
         ) {
             $errors['email'] = 'Email không hợp lệ.';
-        }
+        } */
 
         if ($payload['password'] !== '' && strlen($payload['password']) < 6) {
             $errors['password'] = 'Mật khẩu phải có ít nhất 6 ký tự.';

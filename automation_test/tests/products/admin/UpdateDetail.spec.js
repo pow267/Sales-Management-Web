@@ -12,9 +12,9 @@ test.describe('Kiểm tra tính năng Cập Nhật detail sản phẩm', () => {
     let testData;
     let updateData;
     test.beforeEach(async ({ adminPage }) => {
-        updateDetail = new UpdateDetailPage(adminPage);
-        addPage = new AddPage(adminPage);
-        viewPage = new ViewPage(adminPage);
+        updateDetail = new UpdateDetailPage(adminPage, test);
+        addPage = new AddPage(adminPage, test);
+        viewPage = new ViewPage(adminPage, test);
         testData = productData();
         updateData = productDetailData();
     })
@@ -30,6 +30,7 @@ test.describe('Kiểm tra tính năng Cập Nhật detail sản phẩm', () => {
         await viewPage.search(updateData.tenSua);
         await expect(viewPage.getProductCard(updateData.tenSua)).toBeVisible();
     });
+
     for (let item of InvalidDetail()) {
         test(`Detail-TC2 Lưu detail khi nhập invalid case: ${item.description}`, async ({ adminPage }) => {
             await viewPage.clickAddButton();
@@ -41,6 +42,6 @@ test.describe('Kiểm tra tính năng Cập Nhật detail sản phẩm', () => {
             await updateDetail.fillForm(item.data);
             await updateDetail.save();
             await expect(adminPage.getByText(item.expectedError)).toBeVisible();
-        })
+        });
     }
 });

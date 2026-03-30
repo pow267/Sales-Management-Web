@@ -4,7 +4,7 @@ const { LoginPage } = require('../pages/auth/LoginPage');
 const test = base.extend({
 
     userPage: async ({ page }, use) => {
-        const loginPage = new LoginPage(page);
+        const loginPage = new LoginPage(page, base);
 
         await loginPage.goto();
         await loginPage.login('tester', '123');

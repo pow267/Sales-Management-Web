@@ -7,7 +7,7 @@ test.describe('Kiểm tra chức năng tìm kiếm', () => {
     let productName;
 
     test.beforeEach(async ({ adminPage }) => {
-        viewPage = new ViewPage(adminPage);
+        viewPage = new ViewPage(adminPage, test);
         await viewPage.goto();
     });
 

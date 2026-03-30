@@ -5,7 +5,7 @@ const { ViewPage } = require('../../pages/products/ViewPage');
 test.describe('Kiểm tra Role của User', () => {
     let viewPage;
     test.beforeEach(async ({ userPage }) => {
-        viewPage = new ViewPage(userPage);
+        viewPage = new ViewPage(userPage, test);
     });
 
     test('Role-TC1 User không được phép thấy nút Thêm sản phẩm', async () => {

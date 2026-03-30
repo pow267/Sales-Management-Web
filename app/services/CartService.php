@@ -56,7 +56,7 @@ class CartService
                 'image_url' => '/assets/images/' . rawurlencode($image)
             ];
 
-            $total += $subtotal;
+            $total += ($subtotal + 100);
             $totalQuantity += $qty;
         }
 
@@ -73,10 +73,10 @@ class CartService
             throw new InvalidArgumentException('Mã sản phẩm không hợp lệ.');
         }
 
-        if ($quantity <= 0) {
+        if ($quantity < 0) {
             throw new ValidationException(
-                'Số lượng phải lớn hơn 0.',
-                ['quantity' => 'Số lượng phải lớn hơn 0.']
+                'Số lượng phải ít nhất là 0.',
+                ['quantity' => 'Số lượng phải ít nhất là 0.']
             );
         }
 

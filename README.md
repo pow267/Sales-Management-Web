@@ -5,6 +5,7 @@
 - PostgreSQL (Database)
 - Docker (Environment setup)
 - Tailwind
+- Automation testing
 
 ## Run project
 ### 1. Cài đặt Docker
@@ -18,11 +19,15 @@ Tải và cài Docker Desktop: https://www.docker.com/products/docker-desktop/
 npm install
 
 ### 4. Run test
-- cd "automation"
+- cd "automation_test"
+- Run test (Native): npm run test
+- Run test (Docker): docker compose run --rm playwright
+
+## 5. Report và Database
 - Reset database: npm run reset
 - Seed database: npm run seed
-- Run test (Native): npx playwright test --ui
-- Run test (Docker full): docker compose up --build
+- Report: npm run report
+
 
 ## Scope kiểm thử
 - E2E testing cho các luồng CRUD

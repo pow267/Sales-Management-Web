@@ -357,7 +357,7 @@
                         '<div class="field-error" data-field-error="quantity" hidden></div>' +
                         '<div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">' +
                             '<button type="button" data-qty-action="decrease" style="width:35px; height:35px;">-</button>' +
-                            '<input type="number" id="quantityInput" name="quantity" value="1" min="1" style="width:55px; height:35px; text-align:center;">' +
+                            '<input type="number" id="quantityInput" name="quantity" value="1" min="0" style="width:55px; height:35px; text-align:center;">' +
                             '<button type="button" data-qty-action="increase" style="width:35px; height:35px;">+</button>' +
                         '</div>' +
                     '</div>' +
@@ -376,8 +376,8 @@
                         '<p><strong>Loại sữa:</strong> ' + escapeHtml(state.detail.loai_sua) + '</p>' +
                         '<p><strong>Thành phần dinh dưỡng:</strong><br>' + escapeHtml(state.detail.tpdd).replaceAll('\n', '<br>') + '</p>' +
                         '<p><strong>Lợi ích:</strong><br>' + escapeHtml(state.detail.loi_ich).replaceAll('\n', '<br>') + '</p>' +
-                        '<p><strong>Trọng lượng:</strong> ' + escapeHtml(state.detail.trong_luong) + ' gr</p>' +
-                        '<p><strong>Đơn giá:</strong> ' + formatMoney(state.detail.don_gia) + '</p>' +
+                        '<p><strong>Đơn giá:</strong> ' + escapeHtml(state.detail.trong_luong) + ' gr</p>' +
+                        '<p><strong>Trọng lượng:</strong> ' + formatMoney(state.detail.don_gia) + '</p>' +
                         cartHtml +
                     '</div>' +
                 '</div>' +
@@ -416,8 +416,8 @@
             return;
         }
 
-        const current = Math.max(1, parseInt(input.value || '1', 10));
-        input.value = Math.max(1, current + delta);
+        const current = Math.max(0, parseInt(input.value || '1', 10));
+        input.value = Math.max(0, current + delta);
 
         if (input.form) {
             window.apiClient.clearFieldError(input.form, 'quantity');
@@ -470,9 +470,9 @@
         const rawQuantity = String(form.elements['quantity']?.value || '').trim();
         const quantity = Number(rawQuantity);
 
-        if (!rawQuantity || !Number.isInteger(quantity) || quantity <= 0) {
+        if (!rawQuantity || !Number.isInteger(quantity) || quantity < 0) {
             return {
-                quantity: 'Số lượng phải lớn hơn 0.'
+                quantity: 'Số lượng phải lớn hơn hoặc bằng 0.'
             };
         }
 

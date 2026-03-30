@@ -20,9 +20,12 @@ async function seedDB() {
         );
 
         for (let i = 0; i < count; i++) {
+            const donGia = Math.floor(Math.random() * (500000 - 100000 + 1) + 100000); // 100.000 - 500.000
+            const trongLuong = [400, 800, 900, 1500][i % 4]; // Một số trọng lượng phổ biến
+
             await db.query(
-                `INSERT INTO products ( ten_sua, ma_hang_sua) VALUES ( $1, $2)`,
-                [`Seed ${Date.now()}_${i}`, 'VNM']
+                `INSERT INTO products (ten_sua, ma_hang_sua, don_gia, trong_luong) VALUES ($1, $2, $3, $4)`,
+                [`Seed ${Date.now()}_${i}`, 'VNM', donGia, trongLuong]
             );
         }
 

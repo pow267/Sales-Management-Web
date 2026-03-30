@@ -5,3 +5,15 @@ node_modules/
 pgdata/
 db_data/
 public/assets/css/output.css
+
+# Lab4 Bugs & Backups
+backup/
+BUG_REPORT.md
+
+
+# Reports & Results
+allure-results/
+allure-report/
+playwright-report/
+test-results/
+test-results-allure/

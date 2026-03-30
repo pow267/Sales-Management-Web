@@ -1,6 +1,7 @@
 class LoginPage {
-    constructor(page) {
+    constructor(page, test) {
         this.page = page;
+        this.test = test;
 
         this.loginButton = page.locator('#loginSubmitBtn');
         this.usernameInput = page.locator('input[name="username"]');
@@ -10,13 +11,17 @@ class LoginPage {
     }
 
     async goto() {
-        await this.page.goto('/login');
+        await this.test.step('Điều hướng đến trang đăng nhập', async () => {
+            await this.page.goto('/login');
+        });
     }
 
     async login(username, password) {
-        await this.usernameInput.fill(username);
-        await this.passwordInput.fill(password);
-        await this.loginButton.click();
+        await this.test.step(`Đăng nhập với tài khoản: ${username}`, async () => {
+            await this.usernameInput.fill(username);
+            await this.passwordInput.fill(password);
+            await this.loginButton.click();
+        });
     }
 }
 module.exports = { LoginPage };

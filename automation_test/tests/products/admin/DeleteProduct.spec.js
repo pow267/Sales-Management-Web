@@ -8,8 +8,8 @@ test.describe('Kiểm tra chức năng Xóa sản phẩm', () => {
     let addPage;
     let testData;
     test.beforeEach(async ({ adminPage }) => {
-        viewPage = new ViewPage(adminPage);
-        addPage = new AddPage(adminPage);
+        viewPage = new ViewPage(adminPage, test);
+        addPage = new AddPage(adminPage, test);
         testData = productData();
     });
     test('Delete-TC1 Thêm một sản phẩm mới và xóa nó đi', async () => {

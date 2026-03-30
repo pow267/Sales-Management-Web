@@ -14,7 +14,7 @@ GIỎ HÀNG
 </div>
 
 <div class="cart-navigation">
-    <a href="/" class="add-btn">
+    <a href="/cart" class="add-btn">
         ← Tiếp tục mua hàng
     </a>
 </div>

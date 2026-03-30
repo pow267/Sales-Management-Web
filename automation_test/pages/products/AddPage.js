@@ -1,6 +1,7 @@
 class AddPage {
-    constructor(page) {
+    constructor(page, test) {
         this.page = page;
+        this.test = test;
 
         this.tenSuaInput = page.getByRole('textbox', { name: 'Tên sữa' })
         this.hangSuaChoose = page.getByLabel('Hãng sữa');
@@ -14,16 +15,18 @@ class AddPage {
     }
 
     async fillForm(data) {
-        await this.tenSuaInput.fill(data.tenSua);
-        await this.hangSuaChoose.selectOption(data.hangSua);
-        await this.loaiSuainput.fill(data.loaiSua);
-        await this.trongLuongInput.fill(data.trongLuong);
-        await this.donGiaInput.fill(data.donGia);
-        await this.tpddInPut.fill(data.tpdd);
-        await this.loiIchInput.fill(data.loiIch);
-        if (data.hinh) {
-            await this.hinhFile.setInputFiles(data.hinh);
-        }
+        await this.test.step(`Nhập thông tin thêm sản phẩm: ${data.tenSua}`, async () => {
+            await this.tenSuaInput.fill(data.tenSua);
+            await this.hangSuaChoose.selectOption(data.hangSua);
+            await this.loaiSuainput.fill(data.loaiSua);
+            await this.trongLuongInput.fill(data.trongLuong);
+            await this.donGiaInput.fill(data.donGia);
+            await this.tpddInPut.fill(data.tpdd);
+            await this.loiIchInput.fill(data.loiIch);
+            if (data.hinh) {
+                await this.hinhFile.setInputFiles(data.hinh);
+            }
+        });
     }
 
     async save() {
@@ -31,14 +34,16 @@ class AddPage {
     }
 
     async waitForSave() {
-        await Promise.all([
-            this.page.waitForResponse(res =>
-                res.url().includes('/api/products')
-                && res.request().method() === 'GET'
-                && res.status() === 200
-            ),
-            this.save()
-        ]);
+        await this.test.step('Lưu sản phẩm và chờ xác nhận', async () => {
+            await Promise.all([
+                this.page.waitForResponse(res =>
+                    res.url().includes('/api/products')
+                    && res.request().method() === 'GET'
+                    && res.status() === 200
+                ),
+                this.save()
+            ]);
+        });
     }
 }
 module.exports = { AddPage };

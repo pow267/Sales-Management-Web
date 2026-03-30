@@ -55,7 +55,7 @@
                 rows +
             '</table>' +
             '<h3 class="cart-total">Tổng tiền: ' + formatMoney(cart.total) + '</h3>' +
-            '<div class="mt-6 text-right"><a href="/checkout" class="add-btn">Thanh toán</a></div>';
+            '<div class="mt-6 text-right"><a href="/checkout" class="add-btn" style="background: white !important; color: white !important; border: 1px solid #fff;">Thanh toán</a></div>';
     }
 
     async function loadSession() {

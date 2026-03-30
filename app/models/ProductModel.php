@@ -24,9 +24,9 @@ class ProductModel
             SELECT COUNT(*)
             FROM products p
             LEFT JOIN hang_sua h ON p.ma_hang_sua = h.ma_hs
-            WHERE p.ten_sua ILIKE :search
-               OR COALESCE(p.loai_sua, '') ILIKE :search
-               OR COALESCE(h.ten_hs, '') ILIKE :search
+            WHERE p.ten_sua LIKE :search
+               OR COALESCE(p.loai_sua, '') LIKE :search
+               OR COALESCE(h.ten_hs, '') LIKE :search
         ");
 
         $stmt->execute([
@@ -46,9 +46,9 @@ class ProductModel
 
         if (trim($search) !== '') {
             $sql .= "
-                WHERE p.ten_sua ILIKE :search
-                   OR COALESCE(p.loai_sua, '') ILIKE :search
-                   OR COALESCE(h.ten_hs, '') ILIKE :search
+                WHERE p.ten_sua LIKE :search
+                   OR COALESCE(p.loai_sua, '') LIKE :search
+                   OR COALESCE(h.ten_hs, '') LIKE :search
             ";
         }
 

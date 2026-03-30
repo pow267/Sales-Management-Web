@@ -110,3 +110,12 @@ INSERT INTO hang_sua VALUES
 ('MJ','Mead Johnson','Công ty nhập khẩu Việt Nam','8741258','meadjohn@mj.com'),
 ('NTF','Nutifood','Khu công nghiệp Sóng Thần Bình Dương','7895632','nutifood@ntf.com'),
 ('VNM','Vinamilk','123 Nguyễn Du - Quận 1 - TP.HCM','8794561','vinamilk@vnm.com');
+
+INSERT INTO products (ten_sua, ma_hang_sua, loai_sua, trong_luong, don_gia, hinh) VALUES
+('Sữa bột Abbott Grow 3','AB','Sữa bột',900,320000,'abbott_grow_3.png'),
+('Sữa Cô Gái Hà Lan (Dutch Lady) Không Đường','DL','Sữa nước',180,7500,'dutch_lady_no_sugar.png'),
+('Sữa bột Dumex Gold Step 2','DM','Sữa bột',800,450000,'dumex_gold_2.png'),
+('Sữa Daisy Tiệt Trùng','DS','Sữa bột',400,120000,'daisy_milk.png'),
+('Sữa Enfamil A+ 1','MJ','Sữa bột',900,560000,'enfamil_a1.png'),
+('Sữa Nutifood Grow Plus Đỏ','NTF','Sữa bột',900,380000,'nutifood_red.png'),
+('Sữa Tươi Tiệt Trùng Vinamilk ADM','VNM','Sữa nước',110,6500,'vnm_adm.png');

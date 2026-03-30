@@ -7,8 +7,8 @@ test.describe('Kiểm tra chức năng đặt hàng', () => {
     let orderPage;
     let viewPage;
     test.beforeEach(async ({ userPage }) => {
-        orderPage = new OrderPage(userPage);
-        viewPage = new ViewPage(userPage);
+        orderPage = new OrderPage(userPage, test);
+        viewPage = new ViewPage(userPage, test);
     });
 
     test('Order-TC1 User đặt hàng thành công', async () => {

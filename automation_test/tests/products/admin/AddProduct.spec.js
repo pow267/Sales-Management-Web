@@ -10,8 +10,8 @@ test.describe('Kiểm tra chức năng Thêm sản phẩm', () => {
     let addPage;
     let viewPage;
     test.beforeEach(async ({ adminPage }) => {
-        addPage = new AddPage(adminPage);
-        viewPage = new ViewPage(adminPage);
+        addPage = new AddPage(adminPage, test);
+        viewPage = new ViewPage(adminPage, test);
         await viewPage.clickAddButton();
     });
 
