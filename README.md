@@ -1,32 +1,27 @@
 # Sales Management Web
 
 ## Tech stack
-- Playwright (E2E Testing)
+- Playwright (E2E Testing, API Tesing)
 - PostgreSQL (Database)
 - Docker (Environment setup)
-- Tailwind
-- Automation testing
+- PHP
+- CSS Tailwind
+- Allure Report
 
-## Run project
-### 1. Cài đặt Docker
-Tải và cài Docker Desktop: https://www.docker.com/products/docker-desktop/
+## Hướng dẫn chạy Web Demo
+1. Tải về và cài đặt Docker Desktop: `https://www.docker.com/`
+2. Mở Terminal và dùng lệnh git clone repo về: `https://github.com/pow267/Sales-Management-Web`
+3. Dùng lệnh docker compose để Build and Run Demo Web: `docker compose -d --build`
 
-### 2. Khởi động hệ thống (Backend + Database)
-- docker compose up -d --build
-- http://localhost:8080/
+## Hướng dẫn dùng Playwright
+1. Di chuyển vào thư mục playwright: `cd automation_test`
+2. Cài đặt dependency: `npm install`
+3. Chạy test ( sau khi chạy hết bộ test sẽ tự xuất Allure Report ): `npm run full-test`
+4. Xem lại báo cáo: `npm run report`
 
-### 3. Cài đặt dependencies cho automation test
-npm install
-
-### 4. Run test
-- cd "automation_test"
-- Run test (Native): npm run test
-- Run test (Docker): docker compose run --rm playwright
-
-## 5. Report và Database
+## 5. Database
 - Reset database: npm run reset
 - Seed database: npm run seed
-- Report: npm run report
 
 
 ## Scope kiểm thử
@@ -34,9 +29,11 @@ npm install
 - Authentication flow
 - UI & validation testing
 - Verify dữ liệu bằng SQL sau các thao tác
+- API testing
 
 ## Features
 - Page Object Model (POM)
 - Multi-browser testing
 - SQL data verification
+- Allure Report
 
