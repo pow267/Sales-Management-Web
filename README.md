@@ -16,8 +16,9 @@
 ## Hướng dẫn dùng Playwright
 1. Di chuyển vào thư mục playwright: `cd automation_test`
 2. Cài đặt dependency: `npm install`
-3. Chạy test ( sau khi chạy hết bộ test sẽ tự xuất Allure Report ): `npm run full-test`
-4. Xem lại báo cáo: `npm run report`
+3. Cài đặt playwright: `npx playwright install`
+4. Chạy test ( sau khi chạy hết bộ test sẽ tự xuất Allure Report ): `npm run full-test`
+5. Xem lại báo cáo: `npm run report`
 
 ## 5. Database
 - Reset database: npm run reset
